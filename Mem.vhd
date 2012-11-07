@@ -30,9 +30,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Mem is
-end Mem;
-
-architecture Behavioral of Mem is
 PORT(
 		Addr	:IN STD_LOGIC_VECTOR(31 downto 0);
 		DataIn	:IN STD_LOGIC_VECTOR(31 downto 0);
@@ -56,6 +53,10 @@ PORT(
 		Flash_byte,Flash_ce,Flash_ce1,Flash_ce2,
 		Flash_oe,Flash_rp,Flash_sts,Flash_vpen,Flash_we:OUT STD_LOGIC;		
 	);
+end Mem;
+
+architecture Behavioral of Mem is
+
 
 begin
 
