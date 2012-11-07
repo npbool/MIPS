@@ -1,0 +1,6 @@
+*
+!*.vhd
+!*.ucf
+!MIPS.xise
+!README.md
+!.gitignore
