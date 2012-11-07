@@ -51,7 +51,7 @@ PORT(
 		Flash_addr:OUT STD_LOGIC_VECTOR(22 downto 0);
 		Flash_data:INOUT STD_LOGIC_VECTOR(15 downto 0);
 		Flash_byte,Flash_ce,Flash_ce1,Flash_ce2,
-		Flash_oe,Flash_rp,Flash_sts,Flash_vpen,Flash_we:OUT STD_LOGIC;		
+		Flash_oe,Flash_rp,Flash_sts,Flash_vpen,Flash_we:OUT STD_LOGIC
 	);
 end Mem;
 
