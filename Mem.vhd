@@ -32,10 +32,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity Mem is
 PORT(
 		Addr	:IN STD_LOGIC_VECTOR(31 downto 0);
-		DataIn	:IN STD_LOGIC_VECTOR(31 downto 0);
-		DataOut	:OUT STD_LOGIC_VECTOR(31 downto 0);
-		MemRd,MemWr:STD_LOGIC;
-		Done	:OUT STD_LOGIC:
+		Data	:INOUT STD_LOGIC_VECTOR(31 downto 0);
+		En,Rw	:IN STD_LOGIC;
+		Done	:OUT STD_LOGIC;
 		--TLB:TODO
 		clk,rst:IN STD_LOGIC;
 		
@@ -57,6 +56,7 @@ end Mem;
 
 architecture Behavioral of Mem is
 
+PROCESS(
 
 begin
 
