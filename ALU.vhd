@@ -88,12 +88,8 @@ begin
 		else
 			result<=x"00000000";
 		end if;
-	when "0011" => --sltu --TODO
-		if CONV_UNSIGNED(A,32)<CONV_UNSIGNED(B,32) then
-			result<=x"00000001";
-		else
-			result<=x"00000000";
-		end if;
+	when "0011" => --sltu
+		result<=A-B; --special
 	when "0100" =>
 		result<=A and B;
 	when "0101" =>
@@ -117,7 +113,16 @@ begin
 		Zero<='0';
 	end if;
 	Sign<=result(31);
-	R <= result;
+	if OP="0011" then
+		if (A(31)='0' and B(31)='1') or ( A(31)=B(31) and result(31)='1') then
+			result<=x"00000001";
+		else
+			result<=x"00000000";
+			Zero<='0';
+		end if;
+	else 
+		R <= result;
+	end if;	
 	
 	end PROCESS;
 end Behavioral;
