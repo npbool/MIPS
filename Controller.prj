@@ -1,0 +1,5 @@
+vhdl work "Mem.vhd"
+vhdl work "ipcore_dir/pro_rom.vhd"
+vhdl work "ipcore_dir/bl_rom.vhd"
+vhdl work "ALU.vhd"
+vhdl work "Controller.vhd"

@@ -19,7 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -50,15 +51,13 @@ architecture Behavioral of Controller is
 						branch_e_ne_decide_state, branch_ge_lt_decide_state, branch_gt_le_decide_state, store_memory_byte_state);
 	signal state: state_type;
 	
--- PC registers
-	signal PC: std_logic_vector(31 downto 0);
+	signal counter: STD_LOGIC_VECTOR(3 downto 0);
 
 -- clk
 	signal clk: std_logic;
 
 
 -- Registers
-	signal IR: std_logic_vector(31 downto 0); -- instruction register
 	signal R_a: std_logic_vector(31 downto 0);
 	signal R_b: std_logic_vector(31 downto 0);
 	signal R_d_idx: std_logic_vector(4 downto 0);
@@ -85,6 +84,14 @@ architecture Behavioral of Controller is
 	  );
 	END COMPONENT;
 
+	COMPONENT multiplier
+	PORT (
+    a : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    b : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    p : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+	);
+	END COMPONENT;
+	
 	Component Mem is
 	PORT(
 			Addr	:IN STD_LOGIC_VECTOR(31 downto 0);
@@ -94,12 +101,11 @@ architecture Behavioral of Controller is
 			Done	:OUT STD_LOGIC;
 			
 			--TLB:TODO
-			Tlb_missing	:OUT STD_LOGIC;
-			
+			Tlb_missing	:OUT STD_LOGIC;			
 			
 			clk, rst:IN STD_LOGIC;
 			
-			--管脚，顶层引入
+			--管脚，顶层引�
 			Rom_switch:IN STD_LOGIC;
 			bl_addr,pro_addr:IN STD_LOGIC_VECTOR(9 DOWNTO 0);
 			bl_data,pro_data:IN STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -111,7 +117,7 @@ architecture Behavioral of Controller is
 			Data_ready,Tbre,Tsre:IN STD_LOGIC;
 			Rdn,Wrn:OUT STD_LOGIC;
 			
-			--串口切换：rw,en,oe全1，rdn,wrn=1（InterConn3,6)	
+			--串口切换：rw,en,oe�，rdn,wrn=1（InterConn3,6)	
 			
 			Flash_addr:OUT STD_LOGIC_VECTOR(22 downto 0);
 			Flash_data:INOUT STD_LOGIC_VECTOR(15 downto 0);
@@ -140,12 +146,21 @@ architecture Behavioral of Controller is
 	signal alu_sign: std_logic;
 	signal alu_zero: std_logic;
 
+-- Instruction register
+	signal IR: std_logic_vector(31 downto 0); -- instruction register
+	signal PC: std_logic_vector(31 downto 0); -- PC registers
+	signal current_PC: std_logic_vector(31 downto 0); -- the register to store PC
+
 begin
 	--MemUnit: Mem()
 	alu_unit: ALU port map(R_a=>A, R_b=>B, IR(31 downto 26)=>Code, IR(5 downto 0)=>Func, alu_out=>R, alu_zero=>Zero, alu_sign=>Sign);
+	multiplier_unit: multiplier(R_a=>a, R_b=>b, reg_hi=>p(63 downto 32), reg_lo=>p(31 downto 0));
 	mem_unit: Mem port map(mem_addr=>Addr, mem_data_in=>DataIn, mem_data_out=>DataOut, mem_en=>En, mem_rw=>Rw, mem_done=>Done, tlb_missing=>Tlb_missing, clk=>clk, reset=>rst, rom_switch=>Rom_switch, rom_bl_addr=>bl_addr, rom_pro_addr=>pro_addr, rom_bl_data=>bl_data, rom_pro_data=>pro_data, ram1_addr=>Ram1_addr, ram2_addr=>Ram2_addr, ram1_data=>Ram1_data, ram2_data=>Ram2_data, ram1_en=>Ram1_en, ram1_oe=>Ram1_oe, ram1_rw=>Ram1_rw, ram2_en=>Ram2_en, ram2_oe=>Ram2_oe, ram2_rw=>Ram2_rw, data_ready=>Data_ready, tbre=>Tbre, tsre=>Tsre, rdn=>Rdn, wrn=>Wrn, flash_addr=>Flash_addr, flash_data=>Flash_data, flash_byte=>Flash_byte, flash_ce=>Flash_ce, flash_ce1=>Flash_ce1, flash_ce2=>Flash_ce2, flash_oe=>Flash_oe, flash_rp=>Flash_rp, flash_sts=>Flash_sts, flash_vpen=>Flash_vpen, flash_we=>Flash_we);
 	bl_rom_unit: bl_rom port map(clk=>clka, rom_bl_addr=>addra, rom_bl_data=>douta);
 	pro_rom_unit: pro_rom port map(clk=>clka, rom_pro_addr=>addra, rom_pro_data=>douta);
+	
+	--clock divided
+	clk<=counter(2);
 	
 	process (reset, clk)
 	
@@ -160,34 +175,43 @@ begin
 					state <= prepare_fetch_state;
 				when prepare_fetch_state =>
 					-- prepare for addr and data and memread and memwrite
+					-- todo
+					current_PC <= PC;
+					mem_addr <= PC;
+					mem_rw <= '0';
+					mem_en <= '1';
 					
 				when fetch_state => 
-					memRead <= 1;
-					memWrite <= 0;
 				-- todo
 				-- get instruction from memory
 				-- IR <= memory(PC);
-					PC <= PC + 4;
-					
-					state <= decode_state;
+					if mem_done = '1' then
+						IR <= mem_data_out;
+						PC <= PC + 4;
+						state <= decode_state;
+					end if;
 				when decode_state =>
 					case IR(31 downto 30) is
 						when "00" => -- non-memory instruction
 							case IR(29 downto 26) is
 								when "0000" => -- special
 									case IR(5 downto 0) is 
-										-- ADDU SLT SLTU SUBU AND OR SLLV SRAV SRL SRLV XOR NOR
+										-- ADDU SLT SLTU SUBU AND OR SLLV SRAV SRL SRLV XOR NOR										
 										when "100001" | "101010" | "101011" | "100011" | "100100" | "100101" | "000100" | "000111" | "000010" | "000110" | "100110" | "100111" => -- 33 42 43 35 36 37 4 7 2 6 38 39, (s t d)
 											R_a <= registers(IR(25 downto 21));
 											R_b <= registers(IR(20 downto 16));
 											R_d_idx <= IR(15 downto 11);
-											state <= alu_wb_reg_state;
+											state <= alu_wb_reg_state;										
 										when "000000" | "000011" => -- SLL SRA
 											R_a <= registers(IR(20 downto 16));
-											R_b <= IR(10 downto 6);
+											R_b <= EXT(IR(10 downto 6),32);
 											R_d_idx <= IR(15 downto 11);
 											
-											state <= alu_wb_reg_state;								
+											state <= alu_wb_reg_state;
+										when 24 => -- todo 
+											R_a <= registers(IR(25 downto 21));
+											R_b <= registers(IR(20 downto 16));
+											-- TODO
 										when "010000" =>	-- MFHI d
 											registers(IR(15 downto 11)) <= reg_hi;
 											state <= prepare_fetch_state;
@@ -351,5 +375,10 @@ begin
 					state <= prepare_fetch_state;
 			end case;
 		end if;
+	end process;
+	
+	process(std_clk)
+	begin
+		counter<=counter+1;
 	end process;
 end Behavioral;

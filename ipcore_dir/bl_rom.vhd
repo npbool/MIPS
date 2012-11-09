@@ -43,7 +43,7 @@ LIBRARY XilinxCoreLib;
 ENTITY bl_rom IS
   PORT (
     clka : IN STD_LOGIC;
-    addra : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
   );
 END bl_rom;
@@ -53,7 +53,7 @@ ARCHITECTURE bl_rom_a OF bl_rom IS
 COMPONENT wrapped_bl_rom
   PORT (
     clka : IN STD_LOGIC;
-    addra : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
   );
 END COMPONENT;
@@ -61,8 +61,8 @@ END COMPONENT;
 -- Configuration specification
   FOR ALL : wrapped_bl_rom USE ENTITY XilinxCoreLib.blk_mem_gen_v6_1(behavioral)
     GENERIC MAP (
-      c_addra_width => 12,
-      c_addrb_width => 12,
+      c_addra_width => 10,
+      c_addrb_width => 10,
       c_algorithm => 1,
       c_axi_id_width => 4,
       c_axi_slave_type => 0,
@@ -87,16 +87,16 @@ END COMPONENT;
       c_has_rstb => 0,
       c_has_softecc_input_regs_a => 0,
       c_has_softecc_output_regs_b => 0,
-      c_init_file_name => "bl_rom.mif",
+      c_init_file_name => "no_coe_file_loaded",
       c_inita_val => "0",
       c_initb_val => "0",
       c_interface_type => 0,
-      c_load_init_file => 1,
+      c_load_init_file => 0,
       c_mem_type => 3,
       c_mux_pipeline_stages => 0,
       c_prim_type => 1,
-      c_read_depth_a => 4096,
-      c_read_depth_b => 4096,
+      c_read_depth_a => 1024,
+      c_read_depth_b => 1024,
       c_read_width_a => 32,
       c_read_width_b => 32,
       c_rst_priority_a => "CE",
@@ -112,8 +112,8 @@ END COMPONENT;
       c_use_softecc => 0,
       c_wea_width => 1,
       c_web_width => 1,
-      c_write_depth_a => 4096,
-      c_write_depth_b => 4096,
+      c_write_depth_a => 1024,
+      c_write_depth_b => 1024,
       c_write_mode_a => "WRITE_FIRST",
       c_write_mode_b => "WRITE_FIRST",
       c_write_width_a => 32,

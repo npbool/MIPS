@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
-
+use IEEE.numeric_std.all;
 entity ALU is
     Port ( A,B : in STD_LOGIC_VECTOR(31 downto 0);
 			  Code: in STD_LOGIC_VECTOR(3 downto 0);
@@ -17,30 +17,54 @@ architecture Behavioral of ALU is
 begin	
 	PROCESS(Code,Func,A,B)
 	begin
-	
+--	with Func select
+--			OP <= "0000" when 33, --add
+--					"0010" when 42, --slt
+--					"0011" when 43, --sltu
+--					"0001" when 35, --sub
+--					"0100" when 36, --and
+--					"0101" when 39, --nor
+--					"0111" when 37, --or
+--					"0110" when 38, --xor
+--					"1000" when 0 | 4, --sll
+--					"1001" when 3 | 7, --sra
+--					"1010" when 2 | 6, --srl
+--					"1111" when others;
 	case Code is
 	when "0000" =>		
-		with Func select
-			OP <= "0000" when 33, --add
-					"0010" when 42, --slt
-					"0011" when 43, --sltu
-					"0001" when 35, --sub
-					"0100" when 36, --and
-					"0101" when 39, --nor
-					"0111" when 37, --or
-					"0110" when 38, --xor
-					"1000" when 0 | 4, --sll
-					"1001" when 3 | 7, --sra
-					"1010" when 2 | 6, --srl
-					"1111" when others;
-					
+		case CONV_INTEGER(Func) is 
+		when 33 => --add
+			OP<= "0000";
+		when 42 => --slt
+			OP<= "0010"; 
+		when 43 => --sltu
+			OP<= "0011";
+		when 35 => --sub
+			OP<= "0001";
+		when 36 => --and
+			OP<= "0100";
+		when 39 => --nor
+			OP<= "0101";
+		when 37 => --or
+			OP<= "0111";
+		when 38 => --xor
+			OP<= "0110";
+		when 0 | 4 => --sll
+			OP<= "1000";
+		when 3 | 7 => --sra
+			OP<= "1001";
+		when 2 | 6 => --srl
+			OP<= "1010";
+		when others =>
+			OP<= "1111";
+		end case;					
 	when "1001" =>
 		OP<="0000";
 	when "1010" =>
 		OP<="0010";
 	when "1011" =>
 		OP<="0011";
-	when "0100" | "0001" | "0111" | "0110" | "0001" | "0101"=>
+	when "0100" | "0001" | "0111" | "0110" | "0101"=>
 		OP<="0001";
 	when "1100" =>
 		OP<="0100";
@@ -60,15 +84,15 @@ begin
 		result<=A-B;
 	when "0010" => --slt
 		if CONV_INTEGER(A)<CONV_INTEGER(B) then
-			result<=1;
+			result<=x"00000001";
 		else
-			result<=0;
+			result<=x"00000000";
 		end if;
-	when "0011" => --sltu
-		if CONV_UNSIGNED(A)<CONV_UNSIGNED(B) then
-			result<=1;
+	when "0011" => --sltu --TODO
+		if CONV_UNSIGNED(A,32)<CONV_UNSIGNED(B,32) then
+			result<=x"00000001";
 		else
-			result<=0;
+			result<=x"00000000";
 		end if;
 	when "0100" =>
 		result<=A and B;

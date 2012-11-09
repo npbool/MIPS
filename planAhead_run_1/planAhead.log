@@ -1,0 +1,163 @@
+#-----------------------------------------------------------
+# PlanAhead v13.1 (64-bit)
+# Build 117799 by hdbuild on Thu Feb 17 11:42:17 PST 2011
+# Start of session at: Thu Nov 08 22:12:43 2012
+# Process ID: 1448
+# Log file: E:/Course/Junior1/CO/Final/Project/MIPS/planAhead_run_1/planAhead.log
+# Journal file: E:/Course/Junior1/CO/Final/Project/MIPS/planAhead_run_1/planAhead.jou
+#-----------------------------------------------------------
+INFO: [HD-Licensing 0] Attempting to get a license: PlanAhead
+INFO: [HD-Licensing 1] Got a license: PlanAhead
+INFO: [HD-ArchReader 0] Loading parts and site information from D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\arch.xml
+INFO: [HD-RTPRIM 0] Parsing RTL primitives file 'D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\prims\rtl_prims.xml'
+INFO: [HD-RTPRIM 1] Finished Parsing RTL primitives file 'D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\prims\rtl_prims.xml'
+start_gui -source E:/Course/Junior1/CO/Final/Project/MIPS/pa.fromHdl.tcl
+# create_project -name MIPS -dir "E:/Course/Junior1/CO/Final/Project/MIPS/planAhead_run_1" -part xc3s1200efg320-4
+Parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\verilog.xml].
+Finished parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\verilog.xml].
+Parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\vhdl.xml].
+Finished parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\vhdl.xml].
+Parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\ucf.xml].
+Finished parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\ucf.xml].
+# set_param project.pinAheadLayout yes
+# set srcset [get_property srcset [current_run -impl]]
+# set_property top Controller $srcset
+# set_param project.paUcfFile  "Controller.ucf"
+# set hdlfile [add_files [list {Mem.vhd}]]
+# set_property file_type VHDL $hdlfile
+# set_property library work $hdlfile
+# set hdlfile [add_files [list {ALU.vhd}]]
+# set_property file_type VHDL $hdlfile
+# set_property library work $hdlfile
+# set hdlfile [add_files [list {Controller.vhd}]]
+# set_property file_type VHDL $hdlfile
+# set_property library work $hdlfile
+# add_files "Controller.ucf" -fileset [get_property constrset [current_run]]
+# open_rtl_design -part xc3s1200efg320-4
+INFO: [PlanAhead-58] Using the Verific elaboration engine
+Parsing VHDL file "D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\lib\synplify\synattr.vhd" into library synplify
+Parsing package <attributes>.
+Parsing VHDL file "D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\lib\synplify\synattr.vhd" into library synplify
+Parsing package <attributes>.
+Parsing VHDL file "E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd" into library work
+Parsing entity <Mem>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:37]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:43]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:47]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:48]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:49]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:50]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:51]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:52]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:54]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:55]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:61]
+Parsing architecture <Behavioral> of entity <mem>.
+ERROR: [HDL-294] Cannot update 'in' object bl_addr [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:104]
+ERROR: [HDL-294] Cannot update 'in' object pro_addr [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:105]
+ERROR: [HDL-69] <data> is not declared. [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:129]
+ERROR: [HDL-841] Expecting type std_logic_vector for <tbre>. [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:137]
+ERROR: [HDL-1661] 0 definitions of operator "sll" match with overload of operand types [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:137]
+ERROR: [HDL-839] Type std_logic does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:138]
+ERROR: [HDL-69] <ext> is not declared. [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:192]
+ERROR: [HDL-854] Unit <behavioral> ignored due to previous errors. [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:66]
+INFO: [HDL-1103] VHDL file E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd ignored due to errors
+Parsing VHDL file "E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd" into library work
+Parsing entity <ALU>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:7]
+Parsing architecture <Behavioral> of entity <alu>.
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:24]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:25]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:26]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:27]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:28]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:29]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:30]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:31]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:32]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:33]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:34]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:63]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:65]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:69]
+ERROR: [HDL-839] Type std_logic_vector does not match with the integer literal [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:71]
+ERROR: [HDL-841] Expecting type std_ulogic for <a>. [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:68]
+ERROR: [HDL-432] Formal <size> has no actual or default value. [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:68]
+INFO: [HDL-1408] size is declared here [/build/xfndry/O.35/env/TOS/Verific/verific/vhdl_packages/syn_arit.vhd:170]
+INFO: [HDL-1408] size is declared here [/build/xfndry/O.35/env/TOS/Verific/verific/vhdl_packages/syn_arit.vhd:170]
+ERROR: [HDL-854] Unit <behavioral> ignored due to previous errors. [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:14]
+INFO: [HDL-1103] VHDL file E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd ignored due to errors
+Parsing VHDL file "E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd" into library work
+Parsing entity <Controller>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:34]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:36]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:37]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:38]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:39]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:40]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:41]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:44]
+Parsing architecture <Behavioral> of entity <controller>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:93]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:100]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:104]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:105]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:106]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:107]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:108]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:109]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:112]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:118]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:131]
+ERROR: [HDL-1314] Formal port/generic <r_a> is not declared in <alu> [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:145]
+ERROR: [HDL-432] Formal <a> has no actual or default value. [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:145]
+INFO: [HDL-1408] a is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:131]
+INFO: [HDL-1408] b is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:131]
+INFO: [HDL-1408] code is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:132]
+INFO: [HDL-1408] func is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:133]
+ERROR: [HDL-1314] Formal port/generic <mem_addr> is not declared in <mem> [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:146]
+ERROR: [HDL-432] Formal <addr> has no actual or default value. [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:146]
+INFO: [HDL-1408] addr is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:90]
+INFO: [HDL-1408] datain is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:91]
+INFO: [HDL-1408] en is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:93]
+INFO: [HDL-1408] rw is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:93]
+INFO: [HDL-1408] clk is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:100]
+INFO: [HDL-1408] rst is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:100]
+INFO: [HDL-1408] rom_switch is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:103]
+INFO: [HDL-1408] bl_addr is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:104]
+INFO: [HDL-1408] pro_addr is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:104]
+INFO: [HDL-1408] bl_data is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:105]
+INFO: [HDL-1408] pro_data is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:105]
+INFO: [HDL-1408] data_ready is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+INFO: [HDL-1408] tbre is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+INFO: [HDL-1408] tsre is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+ERROR: [HDL-1314] Formal port/generic <clk> is not declared in <bl_rom> [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:147]
+ERROR: [HDL-432] Formal <clka> has no actual or default value. [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:147]
+INFO: [HDL-1408] clka is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:74]
+INFO: [HDL-1408] addra is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:75]
+ERROR: [HDL-1314] Formal port/generic <clk> is not declared in <pro_rom> [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:148]
+ERROR: [HDL-432] Formal <clka> has no actual or default value. [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:148]
+INFO: [HDL-1408] clka is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:82]
+INFO: [HDL-1408] addra is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:83]
+ERROR: [HDL-69] <memread> is not declared. [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:165]
+ERROR: [HDL-69] <memwrite> is not declared. [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:166]
+ERROR: [HDL-1661] 0 definitions of operator "+" match with overload of operand types [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:170]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:181]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:182]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:186]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:192]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:195]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:198]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:201]
+ERROR: [HDL-539] Indexed name is not a integer [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:204]
+INFO: [HDL-158] Sorry, too many errors..
+Removing all analyzed parse trees
+Time (s): 7.625w
+ERROR: [Designutils-72] Failed to analyze HDL design
+    while executing
+"open_rtl_design -part xc3s1200efg320-4"
+    (file "E:/Course/Junior1/CO/Final/Project/MIPS/pa.fromHdl.tcl" line 19)
+exit
+INFO: [HD-Application 0] Exiting PlanAhead...
+INFO: [HD-Licensing 2] Releasing license: PlanAhead

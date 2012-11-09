@@ -44,7 +44,7 @@ PORT(
 		
 		--管脚，顶层引入
 		Rom_switch:IN STD_LOGIC;
-		bl_addr,pro_addr:IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		bl_addr,pro_addr:IN STD_LOGIC_VECTOR(9 DOWNTO 0);
 		bl_data,pro_data:IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 		Ram1_addr,Ram2_addr:OUT STD_LOGIC_VECTOR(17 downto 0);
 		Ram1_data,Ram2_data:INOUT STD_LOGIC_VECTOR(15 downto 0);
@@ -90,144 +90,146 @@ begin
 	
 	PROCESS(clk)
 	begin		
-		if working='0' and En='1' then
-			--当前空闲
-			
-			--清零
-			if Addr(31 downto 29)="100" or Addr(31 downto 29)="101" then
-				actual_addr <= "000" & Addr(28 downto 0);
-			end if;			
-			
-			Done<='0';
-			if actual_addr(31 downto 12)=x"1FC00" then
-				--ROM
-				bl_addr<=actual_addr(11 downto 0);
-				pro_addr<=actual_addr(11 downto 0);
-				op<="010";
-				count<="000";		
-				working<='1';				
-			elsif actual_addr=x"1FD003F8" then
-				--串口
-				Ram1_en<='1';
-				Ram1_oe<='1';
-				Ram1_rw<='1';
-				if Rw='0' then
-					--read serial
-					if Data_ready='1' then
-						Rdn<='1';
-						Wrn<='0';
-						Ram1_data<="ZZZZZZZZZZZZZZZZ";
-						op<="100";
-						working<='1';
-						count<="111";	
-					end if;
-				else
-					--write serial
-					if Tbre='1' and Tsre='1' then
-						Rdn<='0';
-						Wrn<='1';
-						Ram1_data<=Data(15 downto 0);
-						op<="101";
-						working<='1';
-						count<="111";
-					end if;
-				end if;				
-			elsif actual_addr=x"1FD003FC" then
-				--串口状态				
-				DataOut<=x"00000000" or (Tbre and Tsre) or (Data_ready sll 1);
-				Done<=1;
-			elsif actual_addr(31 downto 24)=x"1E" then
-				--Flash
-				null;
-			elsif Rw='0' then
-				--read Ram
-				Ram1_en<='0';
-				Ram1_oe<='0';
-				Ram1_rw<='1';
-				Ram2_rw<='1';
-				Rdn<='1';
-				Wrn<='1';
-				Ram1_addr<=Addr(17 downto 0);
-				Ram1_data<="ZZZZZZZZZZZZZZZZ";
-				Ram1_rw<='1';
-				Ram2_addr<=Addr(17 downto 0);				
-				Ram2_data<="ZZZZZZZZZZZZZZZZ";
-				Ram2_rw<='1';	
-				working<='1';
-				op<="000";
-				count<="011";
-			else
-				--write Ram		
-				Ram1_en<='0';
-				Ram1_oe<='0';
-				Ram1_rw<='0';
-				Ram2_rw<='0';
-				Rdn<='1';
-				Wrn<='1';
-				Ram1_addr<=Addr(17 downto 0);		
-				Ram1_data<=DataIn(31 downto 16);
-				Ram1_rw<='0';
-				Ram2_addr<=Addr(17 downto 0);				
-				Ram2_data<=DataIn(15 downto 0);
-				Ram2_rw<='0';		
-				working<='1';
-				op<="001";
-				count<="011";
-			end if;			
-		elsif working='1' then
-			case count is
-			when "000" =>
-				--done
-				case op is
-				when "010" =>
-					--prev rom				
-					if Rom_switch='0' then
-						DataOut<= bl_data;
+		if clk'event and clk='1' then
+			if working='0' and En='1' then
+				--当前空闲
+				
+				--清零
+				if Addr(31 downto 29)="100" or Addr(31 downto 29)="101" then
+					actual_addr <= "000" & Addr(28 downto 0);
+				end if;			
+				
+				Done<='0';
+				if actual_addr(31 downto 12)=x"1FC00" then
+					--ROM
+					bl_addr<=actual_addr(11 downto 0);
+					pro_addr<=actual_addr(11 downto 0);
+					op<="010";
+					count<="000";		
+					working<='1';				
+				elsif actual_addr=x"1FD003F8" then
+					--串口
+					Ram1_en<='1';
+					Ram1_oe<='1';
+					Ram1_rw<='1';
+					if Rw='0' then
+						--read serial
+						if Data_ready='1' then
+							Rdn<='1';
+							Wrn<='0';
+							Ram1_data<="ZZZZZZZZZZZZZZZZ";
+							op<="100";
+							working<='1';
+							count<="111";	
+						end if;
 					else
-						DataOut<= pro_data;
-					end if;
-					working<='0';
-					Done<='1';
-				when "100" => --prev serial read
-					DataOut<=EXT(Ram1_data,32);
-					Rdn<='0';
-					working<='0';
-					Done<='1';
-				when "101" => --prev serial write
-					Wrn<='0';
-					working<='0';
-					Done<='1';
-				when "110" => --prev flash read
+						--write serial
+						if Tbre='1' and Tsre='1' then
+							Rdn<='0';
+							Wrn<='1';
+							Ram1_data<=Data(15 downto 0);
+							op<="101";
+							working<='1';
+							count<="111";
+						end if;
+					end if;				
+				elsif actual_addr=x"1FD003FC" then
+					--串口状态				
+					DataOut<=x"00000000" or (Tbre and Tsre) or (Data_ready sll 1);
+					Done<=1;
+				elsif actual_addr(31 downto 24)=x"1E" then
+					--Flash
 					null;
-				when "111" => --prev flash write
-					null;
-				when "00" => --prev ram read;					
-					Done<='1';
-					DataOut(31 downto 16)<=Ram1_data;
-					DataOut(15 downto 0)<=Ram2_data;
-					working<='0';					
-				when "01" => --prev ram write				
-					Done<='1';
-					working<='0';
-				when others=>
-					null;
+				elsif Rw='0' then
+					--read Ram
+					Ram1_en<='0';
+					Ram1_oe<='0';
+					Ram1_rw<='1';
+					Ram2_rw<='1';
+					Rdn<='1';
+					Wrn<='1';
+					Ram1_addr<=Addr(17 downto 0);
+					Ram1_data<="ZZZZZZZZZZZZZZZZ";
+					Ram1_rw<='1';
+					Ram2_addr<=Addr(17 downto 0);				
+					Ram2_data<="ZZZZZZZZZZZZZZZZ";
+					Ram2_rw<='1';	
+					working<='1';
+					op<="000";
+					count<="011";
+				else
+					--write Ram		
+					Ram1_en<='0';
+					Ram1_oe<='0';
+					Ram1_rw<='0';
+					Ram2_rw<='0';
+					Rdn<='1';
+					Wrn<='1';
+					Ram1_addr<=Addr(17 downto 0);		
+					Ram1_data<=DataIn(31 downto 16);
+					Ram1_rw<='0';
+					Ram2_addr<=Addr(17 downto 0);				
+					Ram2_data<=DataIn(15 downto 0);
+					Ram2_rw<='0';		
+					working<='1';
+					op<="001";
+					count<="011";
+				end if;			
+			elsif working='1' then
+				case count is
+				when "000" =>
+					--done
+					case op is
+					when "010" =>
+						--prev rom				
+						if Rom_switch='0' then
+							DataOut<= bl_data;
+						else
+							DataOut<= pro_data;
+						end if;
+						working<='0';
+						Done<='1';
+					when "100" => --prev serial read
+						DataOut<=EXT(Ram1_data,32);
+						Rdn<='0';
+						working<='0';
+						Done<='1';
+					when "101" => --prev serial write
+						Wrn<='0';
+						working<='0';
+						Done<='1';
+					when "110" => --prev flash read
+						null;
+					when "111" => --prev flash write
+						null;
+					when "00" => --prev ram read;					
+						Done<='1';
+						DataOut(31 downto 16)<=Ram1_data;
+						DataOut(15 downto 0)<=Ram2_data;
+						working<='0';					
+					when "01" => --prev ram write				
+						Done<='1';
+						working<='0';
+					when others=>
+						null;
+					end case;
+				when "001" =>
+					count<="000";
+				when "010" =>
+					count<="001";
+				when "011" =>
+					count<="010";
+				when "100" =>
+					count<="011";
+				when "101" =>
+					count<="100";
+				when "110" =>
+					count<="101";
+				when "111" =>
+					count<="110";
+				when others => null;
 				end case;
-			when "001" =>
-				count<="000";
-			when "010" =>
-				count<="001";
-			when "011" =>
-				count<="010";
-			when "100" =>
-				count<="011";
-			when "101" =>
-				count<="100";
-			when "110" =>
-				count<="101";
-			when "111" =>
-				count<="110";
-			when others => null;
-			end case;
+			end if;
 		end if;
 	end PROCESS;	
 end Behavioral;

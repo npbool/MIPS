@@ -1,0 +1,112 @@
+
+****** PlanAhead v13.1 (64-bit)
+  **** Build 117799 by hdbuild on Thu Feb 17 11:42:17 PST 2011
+    ** Copyright 1986-1999, 2001-2011 Xilinx, Inc. All Rights Reserved.
+
+INFO: [HD-Licensing 0] Attempting to get a license: PlanAhead
+INFO: [HD-Licensing 1] Got a license: PlanAhead
+INFO: [HD-ArchReader 0] Loading parts and site information from D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\arch.xml
+INFO: [HD-RTPRIM 0] Parsing RTL primitives file 'D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\prims\rtl_prims.xml'
+INFO: [HD-RTPRIM 1] Finished Parsing RTL primitives file 'D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\prims\rtl_prims.xml'
+start_gui -source E:/Course/Junior1/CO/Final/Project/MIPS/pa.fromHdl.tcl
+starting gui ...
+# create_project -name MIPS -dir "E:/Course/Junior1/CO/Final/Project/MIPS/planAhead_run_1" -part xc3s1200efg320-4
+Parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\verilog.xml].
+Finished parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\verilog.xml].
+Parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\vhdl.xml].
+Finished parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\vhdl.xml].
+Parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\ucf.xml].
+Finished parsing template File [D:\Xilinx\13.1\ISE_DS\ISE\data\projnav\templates\ucf.xml].
+# set_param project.pinAheadLayout yes
+# set srcset [get_property srcset [current_run -impl]]
+# set_property top Controller $srcset
+# set_param project.paUcfFile  "Controller.ucf"
+# set hdlfile [add_files [list {Mem.vhd}]]
+# set_property file_type VHDL $hdlfile
+# set_property library work $hdlfile
+# set hdlfile [add_files [list {ALU.vhd}]]
+# set_property file_type VHDL $hdlfile
+# set_property library work $hdlfile
+# set hdlfile [add_files [list {Controller.vhd}]]
+# set_property file_type VHDL $hdlfile
+# set_property library work $hdlfile
+# add_files "Controller.ucf" -fileset [get_property constrset [current_run]]
+# open_rtl_design -part xc3s1200efg320-4
+INFO: [PlanAhead-58] Using the Verific elaboration engine
+Parsing VHDL file "D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\lib\synplify\synattr.vhd" into library synplify
+Parsing package <attributes>.
+Parsing VHDL file "D:\Xilinx\13.1\ISE_DS\PlanAhead\parts\xilinx\rtl\lib\synplify\synattr.vhd" into library synplify
+Parsing package <attributes>.
+Parsing VHDL file "E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd" into library work
+Parsing entity <Mem>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:37]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:43]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:47]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:48]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:49]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:50]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:51]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:52]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:54]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:55]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd:61]
+Parsing architecture <Behavioral> of entity <mem>.
+INFO: [HDL-1103] VHDL file E:\Course\Junior1\CO\Final\Project\MIPS\Mem.vhd ignored due to errors
+Parsing VHDL file "E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd" into library work
+Parsing entity <ALU>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd:7]
+Parsing architecture <Behavioral> of entity <alu>.
+INFO: [HDL-1408] size is declared here [/build/xfndry/O.35/env/TOS/Verific/verific/vhdl_packages/syn_arit.vhd:170]
+INFO: [HDL-1408] size is declared here [/build/xfndry/O.35/env/TOS/Verific/verific/vhdl_packages/syn_arit.vhd:170]
+INFO: [HDL-1103] VHDL file E:\Course\Junior1\CO\Final\Project\MIPS\ALU.vhd ignored due to errors
+Parsing VHDL file "E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd" into library work
+Parsing entity <Controller>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:34]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:36]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:37]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:38]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:39]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:40]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:41]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:44]
+Parsing architecture <Behavioral> of entity <controller>.
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:93]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:100]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:104]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:105]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:106]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:107]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:108]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:109]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:112]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:118]
+Declaration of multiple ports on the same line is valid but can affect code readability [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:131]
+INFO: [HDL-1408] a is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:131]
+INFO: [HDL-1408] b is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:131]
+INFO: [HDL-1408] code is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:132]
+INFO: [HDL-1408] func is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:133]
+INFO: [HDL-1408] addr is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:90]
+INFO: [HDL-1408] datain is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:91]
+INFO: [HDL-1408] en is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:93]
+INFO: [HDL-1408] rw is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:93]
+INFO: [HDL-1408] clk is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:100]
+INFO: [HDL-1408] rst is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:100]
+INFO: [HDL-1408] rom_switch is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:103]
+INFO: [HDL-1408] bl_addr is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:104]
+INFO: [HDL-1408] pro_addr is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:104]
+INFO: [HDL-1408] bl_data is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:105]
+INFO: [HDL-1408] pro_data is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:105]
+INFO: [HDL-1408] data_ready is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+INFO: [HDL-1408] tbre is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+INFO: [HDL-1408] tsre is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:111]
+INFO: [HDL-1408] clka is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:74]
+INFO: [HDL-1408] addra is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:75]
+INFO: [HDL-1408] clka is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:82]
+INFO: [HDL-1408] addra is declared here [E:\Course\Junior1\CO\Final\Project\MIPS\Controller.vhd:83]
+INFO: [HDL-158] Sorry, too many errors..
+Removing all analyzed parse trees
+Time (s): 7.625w
+exit
+INFO: [HD-Application 0] Exiting PlanAhead...
+INFO: [HD-Licensing 2] Releasing license: PlanAhead

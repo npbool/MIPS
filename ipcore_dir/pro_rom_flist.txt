@@ -1,0 +1,15 @@
+# Output products list for <pro_rom>
+blk_mem_gen_ds512.pdf
+blk_mem_gen_readme.txt
+pro_rom.asy
+pro_rom.gise
+pro_rom.ngc
+pro_rom.sym
+pro_rom.v
+pro_rom.veo
+pro_rom.vhd
+pro_rom.vho
+pro_rom.xco
+pro_rom.xise
+pro_rom_flist.txt
+pro_rom_xmdf.tcl

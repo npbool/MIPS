@@ -1,0 +1,10 @@
+#-----------------------------------------------------------
+# PlanAhead v13.1 (64-bit)
+# Build 117799 by hdbuild on Thu Feb 17 11:42:17 PST 2011
+# Start of session at: Thu Nov 08 22:12:43 2012
+# Process ID: 1448
+# Log file: E:/Course/Junior1/CO/Final/Project/MIPS/planAhead_run_1/planAhead.log
+# Journal file: E:/Course/Junior1/CO/Final/Project/MIPS/planAhead_run_1/planAhead.jou
+#-----------------------------------------------------------
+start_gui -source E:/Course/Junior1/CO/Final/Project/MIPS/pa.fromHdl.tcl
+exit

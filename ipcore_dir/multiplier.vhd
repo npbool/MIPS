@@ -26,8 +26,8 @@
 --     (c) Copyright 1995-2012 Xilinx, Inc.                                   --
 --     All rights reserved.                                                   --
 --------------------------------------------------------------------------------
--- You must compile the wrapper file pro_rom.vhd when simulating
--- the core, pro_rom. When compiling the wrapper file, be sure to
+-- You must compile the wrapper file multiplier.vhd when simulating
+-- the core, multiplier. When compiling the wrapper file, be sure to
 -- reference the XilinxCoreLib VHDL simulation library. For detailed
 -- instructions, please refer to the "CORE Generator Help".
 
@@ -40,95 +40,57 @@ USE ieee.std_logic_1164.ALL;
 -- synthesis translate_off
 LIBRARY XilinxCoreLib;
 -- synthesis translate_on
-ENTITY pro_rom IS
+ENTITY multiplier IS
   PORT (
-    clka : IN STD_LOGIC;
-    addra : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    a : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    b : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    p : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
   );
-END pro_rom;
+END multiplier;
 
-ARCHITECTURE pro_rom_a OF pro_rom IS
+ARCHITECTURE multiplier_a OF multiplier IS
 -- synthesis translate_off
-COMPONENT wrapped_pro_rom
+COMPONENT wrapped_multiplier
   PORT (
-    clka : IN STD_LOGIC;
-    addra : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    a : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    b : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    p : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
   );
 END COMPONENT;
 
 -- Configuration specification
-  FOR ALL : wrapped_pro_rom USE ENTITY XilinxCoreLib.blk_mem_gen_v6_1(behavioral)
+  FOR ALL : wrapped_multiplier USE ENTITY XilinxCoreLib.mult_gen_v11_2(behavioral)
     GENERIC MAP (
-      c_addra_width => 10,
-      c_addrb_width => 10,
-      c_algorithm => 1,
-      c_axi_id_width => 4,
-      c_axi_slave_type => 0,
-      c_axi_type => 1,
-      c_byte_size => 9,
-      c_common_clk => 0,
-      c_default_data => "0",
-      c_disable_warn_bhv_coll => 0,
-      c_disable_warn_bhv_range => 0,
-      c_family => "spartan3",
-      c_has_axi_id => 0,
-      c_has_ena => 0,
-      c_has_enb => 0,
-      c_has_injecterr => 0,
-      c_has_mem_output_regs_a => 0,
-      c_has_mem_output_regs_b => 0,
-      c_has_mux_output_regs_a => 0,
-      c_has_mux_output_regs_b => 0,
-      c_has_regcea => 0,
-      c_has_regceb => 0,
-      c_has_rsta => 0,
-      c_has_rstb => 0,
-      c_has_softecc_input_regs_a => 0,
-      c_has_softecc_output_regs_b => 0,
-      c_init_file_name => "no_coe_file_loaded",
-      c_inita_val => "0",
-      c_initb_val => "0",
-      c_interface_type => 0,
-      c_load_init_file => 0,
-      c_mem_type => 3,
-      c_mux_pipeline_stages => 0,
-      c_prim_type => 1,
-      c_read_depth_a => 1024,
-      c_read_depth_b => 1024,
-      c_read_width_a => 32,
-      c_read_width_b => 32,
-      c_rst_priority_a => "CE",
-      c_rst_priority_b => "CE",
-      c_rst_type => "SYNC",
-      c_rstram_a => 0,
-      c_rstram_b => 0,
-      c_sim_collision_check => "ALL",
-      c_use_byte_wea => 0,
-      c_use_byte_web => 0,
-      c_use_default_data => 0,
-      c_use_ecc => 0,
-      c_use_softecc => 0,
-      c_wea_width => 1,
-      c_web_width => 1,
-      c_write_depth_a => 1024,
-      c_write_depth_b => 1024,
-      c_write_mode_a => "WRITE_FIRST",
-      c_write_mode_b => "WRITE_FIRST",
-      c_write_width_a => 32,
-      c_write_width_b => 32,
+      c_a_type => 0,
+      c_a_width => 32,
+      c_b_type => 0,
+      c_b_value => "10000001",
+      c_b_width => 32,
+      c_ccm_imp => 0,
+      c_ce_overrides_sclr => 0,
+      c_has_ce => 0,
+      c_has_sclr => 0,
+      c_has_zero_detect => 0,
+      c_latency => 0,
+      c_model_type => 0,
+      c_mult_type => 0,
+      c_optimize_goal => 1,
+      c_out_high => 63,
+      c_out_low => 0,
+      c_round_output => 0,
+      c_round_pt => 0,
+      c_verbosity => 0,
       c_xdevicefamily => "spartan3e"
     );
 -- synthesis translate_on
 BEGIN
 -- synthesis translate_off
-U0 : wrapped_pro_rom
+U0 : wrapped_multiplier
   PORT MAP (
-    clka => clka,
-    addra => addra,
-    douta => douta
+    a => a,
+    b => b,
+    p => p
   );
 -- synthesis translate_on
 
-END pro_rom_a;
+END multiplier_a;
