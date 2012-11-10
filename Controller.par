@@ -1,7 +1,7 @@
 Release 13.1 par O.40d (nt64)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
-PEIYUN-LAPTOP::  Sat Nov 10 19:05:59 2012
+PEIYUN-LAPTOP::  Sun Nov 11 01:07:20 2012
 
 par -w -intstyle ise -ol high -t 1 Controller_map.ncd Controller.ncd
 Controller.pcf 
@@ -25,12 +25,12 @@ Device speed data version:  "PRODUCTION 1.27 2011-02-03".
 
 Design Summary Report:
 
- Number of External IOBs                         159 out of 250    63%
+ Number of External IOBs                         160 out of 250    64%
 
-   Number of External Input IOBs                 21
+   Number of External Input IOBs                 22
 
-      Number of External Input IBUFs             21
-        Number of LOCed External Input IBUFs     21 out of 21    100%
+      Number of External Input IBUFs             22
+        Number of LOCed External Input IBUFs     22 out of 22    100%
 
 
    Number of External Output IOBs               106
@@ -45,10 +45,10 @@ Design Summary Report:
         Number of LOCed External Bidir IOBs      32 out of 32    100%
 
 
-   Number of BUFGMUXs                        6 out of 24     25%
+   Number of BUFGMUXs                        5 out of 24     20%
    Number of RAMB16s                         4 out of 28     14%
-   Number of Slices                       4895 out of 8672   56%
-      Number of SLICEMs                    384 out of 4336    8%
+   Number of Slices                       5817 out of 8672   67%
+      Number of SLICEMs                    640 out of 4336   14%
 
 
 
@@ -57,39 +57,76 @@ Placer effort level (-pl):    High
 Placer cost table entry (-t): 1
 Router effort level (-rl):    High 
 
-Starting initial Timing Analysis.  REAL time: 4 secs 
-Finished initial Timing Analysis.  REAL time: 4 secs 
+Starting initial Timing Analysis.  REAL time: 5 secs 
+Finished initial Timing Analysis.  REAL time: 5 secs 
 
 WARNING:Par:288 - The signal switches<10>_IBUF has no load.  PAR will not attempt to route this signal.
 WARNING:Par:288 - The signal switches<11>_IBUF has no load.  PAR will not attempt to route this signal.
 WARNING:Par:288 - The signal switches<12>_IBUF has no load.  PAR will not attempt to route this signal.
 WARNING:Par:288 - The signal switches<13>_IBUF has no load.  PAR will not attempt to route this signal.
-WARNING:Par:288 - The signal switches<14>_IBUF has no load.  PAR will not attempt to route this signal.
 
 Starting Placer
 Total REAL time at the beginning of Placer: 5 secs 
 Total CPU  time at the beginning of Placer: 5 secs 
 
 Phase 1.1  Initial Placement Analysis
-Phase 1.1  Initial Placement Analysis (Checksum:6100b5a) REAL time: 5 secs 
+Phase 1.1  Initial Placement Analysis (Checksum:d56db6c7) REAL time: 6 secs 
 
 Phase 2.7  Design Feasibility Check
-Phase 2.7  Design Feasibility Check (Checksum:6100b5a) REAL time: 5 secs 
+Phase 2.7  Design Feasibility Check (Checksum:d56db6c7) REAL time: 6 secs 
 
 Phase 3.31  Local Placement Optimization
-Phase 3.31  Local Placement Optimization (Checksum:6100b5a) REAL time: 5 secs 
+Phase 3.31  Local Placement Optimization (Checksum:d56db6c7) REAL time: 6 secs 
 
 Phase 4.2  Initial Clock and IO Placement
 
-Phase 4.2  Initial Clock and IO Placement (Checksum:3b19b739) REAL time: 9 secs 
+Phase 4.2  Initial Clock and IO Placement (Checksum:926189e) REAL time: 8 secs 
 
 Phase 5.30  Global Clock Region Assignment
-Phase 5.30  Global Clock Region Assignment (Checksum:3b19b739) REAL time: 9 secs 
+Phase 5.30  Global Clock Region Assignment (Checksum:926189e) REAL time: 8 secs 
 
 Phase 6.36  Local Placement Optimization
-Phase 6.36  Local Placement Optimization (Checksum:3b19b739) REAL time: 9 secs 
+Phase 6.36  Local Placement Optimization (Checksum:926189e) REAL time: 8 secs 
 
 Phase 7.8  Global Placement
-..................
-...................................................................................................................
-...........
+.................
+.......................................................................................................
+............
+...................................................................................
+...............................................
+...............................................
+Phase 7.8  Global Placement (Checksum:855b57cd) REAL time: 35 secs 
+
+Phase 8.5  Local Placement Optimization
+Phase 8.5  Local Placement Optimization (Checksum:855b57cd) REAL time: 35 secs 
+
+Phase 9.18  Placement Optimization
+Phase 9.18  Placement Optimization (Checksum:fd646ce2) REAL time: 58 secs 
+
+Phase 10.5  Local Placement Optimization
+Phase 10.5  Local Placement Optimization (Checksum:fd646ce2) REAL time: 59 secs 
+
+Total REAL time to Placer completion: 59 secs 
+Total CPU  time to Placer completion: 59 secs 
+Writing design to file Controller.ncd
+
+
+
+Starting Router
+
+
+Phase  1  : 43985 unrouted;      REAL time: 1 mins 9 secs 
+
+Phase  2  : 42140 unrouted;      REAL time: 1 mins 9 secs 
+
+Phase  3  : 16059 unrouted;      REAL time: 1 mins 15 secs 
+
+Phase  4  : 17958 unrouted; (Par is working to improve performance)     REAL time: 1 mins 23 secs 
+
+Phase  5  : 0 unrouted; (Par is working to improve performance)     REAL time: 2 mins 1 secs 
+
+Updating file: Controller.ncd with current fully routed design.
+
+Phase  6  : 0 unrouted; (Par is working to improve performance)     REAL time: 2 mins 6 secs 
+
+Phase  7  : 0 unrouted; (Par is working to improve performance)     REAL time: 2 mins 11 secs 

@@ -1,14 +1,8 @@
 //! **************************************************************************
-// Written by: Map O.40d on Sat Nov 10 19:05:54 2012
+// Written by: Map O.40d on Sun Nov 11 01:07:14 2012
 //! **************************************************************************
 
 SCHEMATIC START;
-COMP "LEDS<5>" LOCATE = SITE "D11" LEVEL 1;
-COMP "LEDS<6>" LOCATE = SITE "E11" LEVEL 1;
-COMP "LEDS<7>" LOCATE = SITE "F11" LEVEL 1;
-COMP "LEDS<8>" LOCATE = SITE "A12" LEVEL 1;
-COMP "LEDS<9>" LOCATE = SITE "E12" LEVEL 1;
-NET "std_clk_BUFGP/IBUFG" BEL "std_clk_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
 COMP "ram1_addr<10>" LOCATE = SITE "G13" LEVEL 1;
 COMP "ram1_addr<11>" LOCATE = SITE "G14" LEVEL 1;
 COMP "ram1_addr<12>" LOCATE = SITE "G15" LEVEL 1;
@@ -142,6 +136,7 @@ COMP "flash_ce" LOCATE = SITE "E4" LEVEL 1;
 COMP "flash_oe" LOCATE = SITE "E1" LEVEL 1;
 COMP "flash_we" LOCATE = SITE "D4" LEVEL 1;
 COMP "flash_rp" LOCATE = SITE "D1" LEVEL 1;
+COMP "auto_clk" LOCATE = SITE "B9" LEVEL 1;
 COMP "flash_addr<0>" LOCATE = SITE "T2" LEVEL 1;
 COMP "flash_addr<1>" LOCATE = SITE "T1" LEVEL 1;
 COMP "flash_addr<2>" LOCATE = SITE "R3" LEVEL 1;
@@ -163,5 +158,11 @@ COMP "LEDS<1>" LOCATE = SITE "E10" LEVEL 1;
 COMP "LEDS<2>" LOCATE = SITE "A11" LEVEL 1;
 COMP "LEDS<3>" LOCATE = SITE "B11" LEVEL 1;
 COMP "LEDS<4>" LOCATE = SITE "C11" LEVEL 1;
+COMP "LEDS<5>" LOCATE = SITE "D11" LEVEL 1;
+COMP "LEDS<6>" LOCATE = SITE "E11" LEVEL 1;
+COMP "LEDS<7>" LOCATE = SITE "F11" LEVEL 1;
+COMP "LEDS<8>" LOCATE = SITE "A12" LEVEL 1;
+COMP "LEDS<9>" LOCATE = SITE "E12" LEVEL 1;
+NET "auto_clk_BUFGP/IBUFG" BEL "auto_clk_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
 SCHEMATIC END;
 

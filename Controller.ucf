@@ -2,6 +2,7 @@
 #Python Generated Constraints
 
 NET "std_clk" LOC = U9;
+NET "auto_clk" LOC = B9;
 NET "reset" LOC = U10;
 NET "rom_switch" LOC = T7;
 NET "ram1_addr[0]" LOC = C17;

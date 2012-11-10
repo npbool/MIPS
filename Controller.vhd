@@ -32,7 +32,7 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 
 entity Controller is 
 	port( 
-		std_clk, reset: in std_logic;
+		std_clk, auto_clk, reset: in std_logic; -- std_clk is artificial, and auto_clk is automatic;
 		rom_switch: in std_logic;	-- the most right switch
 		ram1_addr,ram2_addr:OUT STD_LOGIC_VECTOR(17 downto 0);
 		ram1_data,ram2_data:INOUT STD_LOGIC_VECTOR(15 downto 0);
@@ -62,7 +62,8 @@ architecture Behavioral of Controller is
 
 -- clk
 	signal clk: std_logic;
-
+	signal div_clk: std_logic;
+	signal div_counter: std_logic_vector(2 downto 0);
 
 -- Registers
 	signal R_a: std_logic_vector(31 downto 0);
@@ -73,7 +74,12 @@ architecture Behavioral of Controller is
 
 -- Register File
 	type reg_file is array (0 to 31) of std_logic_vector(31 downto 0);
-	signal registers: reg_file;
+	signal GPR: reg_file;
+	signal CPR: reg_file;
+
+-- TLB registers
+	type tlb_file is array(0 to 7) of std_logic_vector(62 downto 0);
+	signal TLB: tlb_file;
 
 	COMPONENT bl_rom
 	  PORT (
@@ -160,40 +166,32 @@ architecture Behavioral of Controller is
 	signal multi_out : std_logic_vector(63 downto 0);
 -- Instruction register
 	signal IR: std_logic_vector(31 downto 0); -- instruction register
-	signal PC: std_logic_vector(31 downto 0); -- PC registers
+	signal PC: std_logic_vector(31 downto 0); -- PC GPR
 	signal current_PC: std_logic_vector(31 downto 0); -- the register to store PC
 	
 	signal LED_display_data: std_logic_vector(31 downto 0);
 
+	--serial ins read counter
+	signal ins_counter : std_logic_vector(4 downto 0);
 begin
-	--MemUnit: Mem()
-	
 	alu_unit: ALU port map(A=>R_a,B=> R_b,Code=> IR(31 downto 26),Func=> IR(5 downto 0),R=> alu_out,Zero=> alu_zero,Sign=> alu_sign);
---	multiplier_unit: multiplier(R_a=>a, R_b=>b, reg_hi=>p(63 downto 32), reg_lo=>p(31 downto 0));
 	multiplier_unit: multiplier port map(a=>R_a, b=> R_b,p=>multi_out);
-
---	mem_unit: Mem port map(mem_addr=>Addr, mem_data_in=>DataIn, mem_data_out=>DataOut, mem_en=>En, mem_rw=>Rw, mem_done=>Done, tlb_missing=>Tlb_missing, clk=>clk, reset=>rst, rom_switch=>Rom_switch, rom_bl_addr=>bl_addr, rom_pro_addr=>pro_addr, rom_bl_data=>bl_data, rom_pro_data=>pro_data, ram1_addr=>Ram1_addr, ram2_addr=>Ram2_addr, ram1_data=>Ram1_data, ram2_data=>Ram2_data, ram1_en=>Ram1_en, ram1_oe=>Ram1_oe, ram1_rw=>Ram1_rw, ram2_en=>Ram2_en, ram2_oe=>Ram2_oe, ram2_rw=>Ram2_rw, data_ready=>Data_ready, tbre=>Tbre, tsre=>Tsre, rdn=>Rdn, wrn=>Wrn, flash_addr=>Flash_addr, flash_data=>Flash_data, flash_byte=>Flash_byte, flash_ce=>Flash_ce, flash_ce1=>Flash_ce1, flash_ce2=>Flash_ce2, flash_oe=>Flash_oe, flash_rp=>Flash_rp, flash_sts=>Flash_sts, flash_vpen=>Flash_vpen, flash_we=>Flash_we);
-	mem_unit: Mem port map(Seg7_out=>seg7_out_1,Addr=>mem_addr,DataIn=> mem_data_in,DataOut=> mem_data_out,En=> mem_en,Rw=> mem_rw,Done=> mem_done,Tlb_missing=> tlb_missing,clk=> clk,rst=> reset,Rom_switch=> rom_switch,bl_addr=> rom_bl_addr,pro_addr=> rom_pro_addr,bl_data=> rom_bl_data,pro_data=> rom_pro_data,Ram1_addr=> ram1_addr,Ram2_addr=> ram2_addr,Ram1_data=> ram1_data,Ram2_data=> ram2_data,Ram1_en=> ram1_en,Ram1_oe=> ram1_oe,Ram1_rw=> ram1_rw,Ram2_en=> ram2_en,Ram2_oe=> ram2_oe,Ram2_rw=> ram2_rw,Data_ready=> data_ready,Tbre=> tbre,Tsre=> tsre,Rdn=> rdn,Wrn=> wrn,Flash_addr=> flash_addr,Flash_data=> flash_data,Flash_byte=> flash_byte,Flash_ce=> flash_ce,Flash_ce1=> flash_ce1,Flash_ce2=> flash_ce2,Flash_oe=> flash_oe,Flash_rp=> flash_rp,Flash_sts=> flash_sts,Flash_vpen=> flash_vpen,Flash_we=> flash_we);
---	bl_rom_unit: bl_rom port map(clk=>clka, rom_bl_addr=>addra, rom_bl_data=>douta);
+	mem_unit: Mem port map(Seg7_out=>seg7_out_1,Addr=>mem_addr,DataIn=> mem_data_in,DataOut=> mem_data_out,En=> mem_en,Rw=> mem_rw,Done=> mem_done,Tlb_missing=> tlb_missing,clk=> div_counter(1),rst=> reset,Rom_switch=> rom_switch,bl_addr=> rom_bl_addr,pro_addr=> rom_pro_addr,bl_data=> rom_bl_data,pro_data=> rom_pro_data,Ram1_addr=> ram1_addr,Ram2_addr=> ram2_addr,Ram1_data=> ram1_data,Ram2_data=> ram2_data,Ram1_en=> ram1_en,Ram1_oe=> ram1_oe,Ram1_rw=> ram1_rw,Ram2_en=> ram2_en,Ram2_oe=> ram2_oe,Ram2_rw=> ram2_rw,Data_ready=> data_ready,Tbre=> tbre,Tsre=> tsre,Rdn=> rdn,Wrn=> wrn,Flash_addr=> flash_addr,Flash_data=> flash_data,Flash_byte=> flash_byte,Flash_ce=> flash_ce,Flash_ce1=> flash_ce1,Flash_ce2=> flash_ce2,Flash_oe=> flash_oe,Flash_rp=> flash_rp,Flash_sts=> flash_sts,Flash_vpen=> flash_vpen,Flash_we=> flash_we);
 	bl_rom_unit: bl_rom port map(clka=>clk,addra=> rom_bl_addr,douta=> rom_bl_data);
 	pro_rom_unit: pro_rom port map(clka=>clk,addra=> rom_pro_addr,douta=> rom_pro_data);
 	
 	--clock divided
-	--clk<=counter(2);
-	clk<=std_clk;
+	clk<=std_clk when switches(14) = '1' else div_counter(1);
 	
 	process (reset, clk)
-	
 	begin
 		if reset = '0' then
-			registers(0)<=(others => '0');
+			GPR(0)<=(others => '0');
 			mem_en<='0';
 			state <= init_state;
 		elsif clk'event and clk='1' then
 			case state is 
 				when init_state =>
-					-- do something initialization
-					-- PC <= (others >= '0');
 					PC <= x"1FC00000";
 					state <= prepare_fetch_state;
 				when prepare_fetch_state =>
@@ -217,89 +215,115 @@ begin
 									case IR(5 downto 0) is 
 										-- ADDU SLT SLTU SUBU AND OR SLLV SRAV SRL SRLV XOR NOR										
 										when "100001" | "101010" | "101011" | "100011" | "100100" | "100101" | "000100" | "000111" | "000010" | "000110" | "100110" | "100111" => -- 33 42 43 35 36 37 4 7 2 6 38 39, (s t d)
-											R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
-											R_b <= registers(CONV_INTEGER(IR(20 downto 16)));
+											R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
+											R_b <= GPR(CONV_INTEGER(IR(20 downto 16)));
 											R_d_idx <= IR(15 downto 11);
 											state <= alu_wb_reg_state;										
 										when "000000" | "000011" => -- SLL SRA
-											R_a <= registers(CONV_INTEGER(IR(20 downto 16)));
+											R_a <= GPR(CONV_INTEGER(IR(20 downto 16)));
 											R_b <= EXT(IR(10 downto 6),32);
 											R_d_idx <= IR(15 downto 11);
 											
 											state <= alu_wb_reg_state;
 										when "011000" => -- todo  -- multiplier
-											R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
-											R_b <= registers(CONV_INTEGER(IR(20 downto 16)));											
+											R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
+											R_b <= GPR(CONV_INTEGER(IR(20 downto 16)));											
 											multi_wait_counter <= "00";
 											state <= multi_wait_state;
 											-- TODO
 										when "010000" =>	-- MFHI d
-											registers(CONV_INTEGER(IR(15 downto 11))) <= reg_hi;
+											GPR(CONV_INTEGER(IR(15 downto 11))) <= reg_hi;
 											state <= prepare_fetch_state;
 										when "010001" => -- MTHI d
-											reg_hi <= registers(CONV_INTEGER(IR(25 downto 21)));
+											reg_hi <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											state <= prepare_fetch_state;
 										when "010010" => -- MFLO d
-											registers(CONV_INTEGER(IR(15 downto 11))) <= reg_lo;
+											GPR(CONV_INTEGER(IR(15 downto 11))) <= reg_lo;
 											state <= prepare_fetch_state;
 										when "010011" => -- MTLO d
-											reg_lo <= registers(CONV_INTEGER(IR(25 downto 21)));
+											reg_lo <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											state <= prepare_fetch_state;
 										when "001001" => -- JALR
-											registers(CONV_INTEGER(IR(15 downto 11))) <= PC;
-											PC <= registers(CONV_INTEGER(IR(25 downto 21)));
+											GPR(CONV_INTEGER(IR(15 downto 11))) <= PC;
+											PC <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											state <= prepare_fetch_state;
 										when "001000" => -- JR 
-											PC <= registers(CONV_INTEGER(IR(25 downto 21)));
+											PC <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											state <= prepare_fetch_state;
+										when "001110" => -- SYSCALL
+											-- to do
 										when others =>
-											null;
+											state <= prepare_fetch_state;
 									end case;
 								when "1100" | "1101" | "1110" => -- ANDI ORI XORI
-									R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
+									R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
 									R_b <= EXT(IR(15 downto 0), 32);
 									R_d_idx <= IR(20 downto 16);
 									state <= alu_wb_reg_state;
 								when "0010" => -- J tar
 									PC(27 downto 2) <= IR(25 downto 0); --PC <= PC(31 downto 28) & IR(25 downto 0) & "00";
 									state <= prepare_fetch_state;
-								when "0011" => -- JAL tar
-									registers(31) <= PC;
+								when "0011" => --JAL tar
+									GPR(31) <= PC;
 									PC(27 downto 2) <= IR(25 downto 0);
 									state <= prepare_fetch_state;
 								when "1001" | "1010" | "1011" => -- ADDIU SLTI SLTIU
-									R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
+									R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
 									R_b <= SXT(IR(15 downto 0), 32);
 									R_d_idx <= IR(20 downto 16);
 									state <= alu_wb_reg_state;
 								when "0111" | "0110" => -- BGTZ BLEZ 
-									R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
+									R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
 									R_b <= (others => '0');
 									state <= branch_gt_le_decide_state;
 								when "0001" => -- BGEZ BLTZ
-									R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
+									R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
 									R_b <= (others => '0');
 									state <= branch_ge_lt_decide_state;
 								when "0100" | "0101" => -- BEQ BNE
-									R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
-									R_b <= (others => '0');
+									R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
+									R_b <= GPR(CONV_INTEGER(IR(20 downto 16)));
 									state <= branch_e_ne_decide_state;
+								when "1111" => -- LUI
+									GPR(CONV_INTEGER(IR(20 downto 16)))(31 downto 16) <= IR(15 downto 0);
+									state <= prepare_fetch_state;
 								when others =>
-									null;
+									state <= prepare_fetch_state;
 							end case;
 						when "10" => -- memory instructions
-							R_a <= registers(CONV_INTEGER(IR(25 downto 21)));
+							R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
 							R_b <= SXT(IR(15 downto 0), 32);
 							case IR(27 downto 26) is
 								when "11" => -- Word visit
-									state <= visit_memory_word_state;
+									if IR(25 downto 24) = "11" then -- cache, which is regarded as NOP
+										state <= prepare_fetch_state; 
+									else
+										state <= visit_memory_word_state;
+									end if;
 								when "00" => -- Byte visit
 									state <= visit_memory_byte_state;
 								when others =>
+									state <= prepare_fetch_state;
+							end case;
+						when "01" => -- privileged instructions
+							case IR(25 downto 21) is
+								when "00000" => -- MFC0
+								-- is there any possiblility that this block will be called in user mode.
+									GPR(CONV_INTEGER(IR(15 downto 11))) <= CPR(CONV_INTEGER(IR(20 downto 16)));
+								when "00100" => -- MTC0
+									CPR(CONV_INTEGER(IR(20 downto 16))) <= GPR(CONV_INTEGER(IR(15 downto 11)));
+								when "10000" => -- ERET TLBWI
+									if IR(5 downto 0) = "011000" then -- ERET -- to be done
+										PC <= CPR(14);
+									elsif IR(5 downto 0) = "000010" then -- TLBWI
+										TLB(CONV_INTEGER(CPR(0)(2 downto 0))) <= CPR(10)(31 downto 13) & CPR(2)(25 downto 6) & CPR(2)(1) & CPR(2)(2) & CPR(3)(25 downto 6) & CPR(3)(1) & CPR(3)(2);
+									end if;
+								when others =>
 									null;
 							end case;
+							state <= prepare_fetch_state;
 						when others =>
-							null;
+							state <= prepare_fetch_state;
 					end case;
 				when multi_wait_state =>
 					if multi_wait_counter = "11" then						
@@ -315,10 +339,10 @@ begin
 						when "00" => -- LW 100011
 							mem_rw <= '0';
 						when "10" => -- SW
-							mem_data_in <= registers(CONV_INTEGER(IR(20 downto 16)));
+							mem_data_in <= GPR(CONV_INTEGER(IR(20 downto 16)));
 							mem_rw <= '1';
 						when others =>
-							null;
+							state <= prepare_fetch_state;
 					end case;
 					mem_en <= '1';
 					state <= wait_memory_word_state;
@@ -331,7 +355,7 @@ begin
 						when "10" => -- SB 101000
 							mem_rw <= '1';
 						when others =>
-							null;
+							state <= prepare_fetch_state;
 					end case;
 					mem_en <= '1';
 					state <= wait_memory_byte_state;
@@ -341,12 +365,12 @@ begin
 						mem_en <= '0';
 						case IR(31 downto 26) is 
 							when "100011" => -- lw
-								registers(CONV_INTEGER(IR(20 downto 16))) <= mem_data_out;
+								GPR(CONV_INTEGER(IR(20 downto 16))) <= mem_data_out;
 								state <= prepare_fetch_state;
 							when "101011" | "101000" => -- sw sb
 								state <= prepare_fetch_state;
 							when others =>
-								null;								
+								state <= prepare_fetch_state;						
 						end case;
 					end if;
 				when wait_memory_byte_state =>
@@ -356,57 +380,57 @@ begin
 							when "00" =>  -- lb
 								case alu_out(1 downto 0) is
 									when "00" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(7 downto 0), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(7 downto 0), 32);
 									when "01" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(15 downto 8), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(15 downto 8), 32);
 									when "10" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(23 downto 16), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(23 downto 16), 32);
 									when "11" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(31 downto 24), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= SXT(mem_data_out(31 downto 24), 32);
 									when others =>
-										null;
+										state <= prepare_fetch_state;
 								end case;
-								registers(CONV_INTEGER(IR(20 downto 16))) <= mem_data_out;
+								GPR(CONV_INTEGER(IR(20 downto 16))) <= mem_data_out;
 								state <= prepare_fetch_state;
 							when "01" =>  -- lbu
 								case alu_out(1 downto 0) is
 									when "00" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(7 downto 0), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(7 downto 0), 32);
 									when "01" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(15 downto 8), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(15 downto 8), 32);
 									when "10" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(23 downto 16), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(23 downto 16), 32);
 									when "11" =>
-										registers(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(31 downto 24), 32);
+										GPR(CONV_INTEGER(IR(20 downto 16))) <= EXT(mem_data_out(31 downto 24), 32);
 									when others =>
-										null;
+										state <= prepare_fetch_state;
 								end case;
 								state <= prepare_fetch_state;
 							when "10" =>  -- sb
 								mem_data_in <= mem_data_out;
 								state <= store_memory_byte_state;
 							when others =>
-								null;
+								state <= prepare_fetch_state;
 						end case;
 					end if;
 				when store_memory_byte_state =>
 					case alu_out(1 downto 0) is
 						when "00" =>
-							mem_data_in(7 downto 0) <= registers(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
+							mem_data_in(7 downto 0) <= GPR(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
 						when "01" =>
-							mem_data_in(15 downto 8) <= registers(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
+							mem_data_in(15 downto 8) <= GPR(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
 						when "10" =>
-							mem_data_in(23 downto 16) <= registers(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
+							mem_data_in(23 downto 16) <= GPR(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
 						when "11" =>
-							mem_data_in(31 downto 24) <= registers(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
+							mem_data_in(31 downto 24) <= GPR(CONV_INTEGER(IR(20 downto 16)))(7 downto 0);
 						when others =>
-							null;
+							state <= prepare_fetch_state;
 					end case;
 					mem_rw <= '1';
 					mem_en <= '1';
 					state <= wait_memory_word_state;
 				when alu_wb_reg_state =>
-					registers(CONV_INTEGER(R_d_idx)) <= alu_out;
+					GPR(CONV_INTEGER(R_d_idx)) <= alu_out;
 					state <= prepare_fetch_state;
 				when branch_gt_le_decide_state =>
 					if (IR(26) = '1' and (alu_sign = '0' and alu_zero = '0')) or (IR(26) = '0' and (alu_sign = '1' or alu_zero = '1')) then 
@@ -420,7 +444,7 @@ begin
 					state <= prepare_fetch_state;
 				when branch_e_ne_decide_state =>
 					if (IR(26) = '1' and alu_zero = '0') or (IR(26) = '0' and alu_zero = '1') then -- BNE BEQ
-						PC <= PC + (SXT(IR(15 downto 0), 32) & "00");
+						PC <= PC + (SXT(IR(15 downto 0), 30) & "00");
 					end if;
 					state <= prepare_fetch_state;
 			end case;
@@ -431,11 +455,6 @@ begin
 	begin
 		counter<=counter+1;
 	end process;
-
---   type state_type is (init_state, prepare_fetch_state, fetch_state, decode_state, alu_wb_reg_state, 
---						branch_e_ne_decide_state, branch_ge_lt_decide_state, branch_gt_le_decide_state, 
---						visit_memory_word_state, visit_memory_byte_state, store_memory_byte_state, 
---						wait_memory_word_state, wait_memory_byte_state, multi_wait_state);
 	
 	process(state)
 	begin
@@ -463,7 +482,7 @@ begin
 		end case;
 	end process;
 	
-	process(switches)
+	process(switches,PC,IR,reg_hi,reg_lo,GPR)
 	begin
 		case switches(8 to 9) is 
 			when "00" => 
@@ -471,7 +490,7 @@ begin
 			when "01" =>
 				case switches(5 to 6) is
 					when "00" =>  --general
-						LED_display_data <= registers(CONV_INTEGER(switches(0 to 4)));
+						LED_display_data <= GPR(CONV_INTEGER(switches(0 to 4)));
 					when "01" => --CP0
 						null;
 					when "10" => --PC/IR
@@ -499,6 +518,17 @@ begin
 			LEDS <= LED_display_data(15 downto 0);
 		else 
 			LEDS <= LED_display_data(31 downto 16);
+		end if;
+	end process;
+	
+	process(auto_clk)
+	begin 
+		if auto_clk'event and auto_clk = '1' then
+			if div_counter = "100" then 
+				div_counter <= "000";
+			else 
+				div_counter <= div_counter + 1;
+			end if;
 		end if;
 	end process;
 end Behavioral;

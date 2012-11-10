@@ -1,4 +1,5 @@
-std_clk	B9
+std_clk	U9
+auto_clk	B9
 reset	U10
 rom_switch	T7
 ram1_addr[0]	C17
