@@ -30,52 +30,55 @@ begin
 --					"1001" when 3 | 7, --sra
 --					"1010" when 2 | 6, --srl
 --					"1111" when others;
-	case Code is
-	when "0000" =>		
-		case CONV_INTEGER(Func) is 
-		when 33 => --add
-			OP<= "0000";
-		when 42 => --slt
-			OP<= "0010"; 
-		when 43 => --sltu
-			OP<= "0011";
-		when 35 => --sub
-			OP<= "0001";
-		when 36 => --and
-			OP<= "0100";
-		when 39 => --nor
-			OP<= "0101";
-		when 37 => --or
-			OP<= "0111";
-		when 38 => --xor
-			OP<= "0110";
-		when 0 | 4 => --sll
-			OP<= "1000";
-		when 3 | 7 => --sra
-			OP<= "1001";
-		when 2 | 6 => --srl
-			OP<= "1010";
+	if Code(5 downto 4)="00" then 
+		case Code(3 downto 0) is
+		when "0000" =>		
+			case CONV_INTEGER(Func) is 
+			when 33 => --add
+				OP<= "0000";
+			when 42 => --slt
+				OP<= "0010"; 
+			when 43 => --sltu
+				OP<= "0011";
+			when 35 => --sub
+				OP<= "0001";
+			when 36 => --and
+				OP<= "0100";
+			when 39 => --nor
+				OP<= "0101";
+			when 37 => --or
+				OP<= "0111";
+			when 38 => --xor
+				OP<= "0110";
+			when 0 | 4 => --sll
+				OP<= "1000";
+			when 3 | 7 => --sra
+				OP<= "1001";
+			when 2 | 6 => --srl
+				OP<= "1010";
+			when others =>
+				OP<= "1111";
+			end case;					
+		when "1001" =>
+			OP<="0000";
+		when "1010" =>
+			OP<="0010";
+		when "1011" =>
+			OP<="0011";
+		when "0100" | "0001" | "0111" | "0110" | "0101"=>
+			OP<="0001";
+		when "1100" =>
+			OP<="0100";
+		when "1101" =>
+			OP<="0111";
+		when "1110" =>
+			OP<="0110";
 		when others =>
-			OP<= "1111";
-		end case;					
-	when "1001" =>
+			OP<="1111";						
+		end case;
+	else
 		OP<="0000";
-	when "1010" =>
-		OP<="0010";
-	when "1011" =>
-		OP<="0011";
-	when "0100" | "0001" | "0111" | "0110" | "0101"=>
-		OP<="0001";
-	when "1100" =>
-		OP<="0100";
-	when "1101" =>
-		OP<="0111";
-	when "1110" =>
-		OP<="0110";
-	when others =>
-		OP<="1111";						
-	end case;
-	
+	end if;
 	
 	case OP is
 	when "0000" =>
