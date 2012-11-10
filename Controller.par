@@ -1,0 +1,95 @@
+Release 13.1 par O.40d (nt64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+PEIYUN-LAPTOP::  Sat Nov 10 19:05:59 2012
+
+par -w -intstyle ise -ol high -t 1 Controller_map.ncd Controller.ncd
+Controller.pcf 
+
+
+Constraints file: Controller.pcf.
+Loading device for application Rf_Device from file '3s1200e.nph' in environment D:\Xilinx\13.1\ISE_DS\ISE\.
+   "Controller" is an NCD, version 3.2, device xc3s1200e, package fg320, speed -4
+
+Initializing temperature to 85.000 Celsius. (default - Range: -40.000 to 100.000 Celsius)
+Initializing voltage to 1.140 Volts. (default - Range: 1.140 to 1.320 Volts)
+
+INFO:Par:282 - No user timing constraints were detected or you have set the option to ignore timing constraints ("par
+   -x"). Place and Route will run in "Performance Evaluation Mode" to automatically improve the performance of all
+   internal clocks in this design. Because there are not defined timing requirements, a timing score will not be
+   reported in the PAR report in this mode. The PAR timing summary will list the performance achieved for each clock.
+   Note: For the fastest runtime, set the effort level to "std".  For best performance, set the effort level to "high".
+
+Device speed data version:  "PRODUCTION 1.27 2011-02-03".
+
+
+Design Summary Report:
+
+ Number of External IOBs                         159 out of 250    63%
+
+   Number of External Input IOBs                 21
+
+      Number of External Input IBUFs             21
+        Number of LOCed External Input IBUFs     21 out of 21    100%
+
+
+   Number of External Output IOBs               106
+
+      Number of External Output IOBs            106
+        Number of LOCed External Output IOBs    106 out of 106   100%
+
+
+   Number of External Bidir IOBs                 32
+
+      Number of External Bidir IOBs              32
+        Number of LOCed External Bidir IOBs      32 out of 32    100%
+
+
+   Number of BUFGMUXs                        6 out of 24     25%
+   Number of RAMB16s                         4 out of 28     14%
+   Number of Slices                       4895 out of 8672   56%
+      Number of SLICEMs                    384 out of 4336    8%
+
+
+
+Overall effort level (-ol):   High 
+Placer effort level (-pl):    High 
+Placer cost table entry (-t): 1
+Router effort level (-rl):    High 
+
+Starting initial Timing Analysis.  REAL time: 4 secs 
+Finished initial Timing Analysis.  REAL time: 4 secs 
+
+WARNING:Par:288 - The signal switches<10>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal switches<11>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal switches<12>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal switches<13>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal switches<14>_IBUF has no load.  PAR will not attempt to route this signal.
+
+Starting Placer
+Total REAL time at the beginning of Placer: 5 secs 
+Total CPU  time at the beginning of Placer: 5 secs 
+
+Phase 1.1  Initial Placement Analysis
+Phase 1.1  Initial Placement Analysis (Checksum:6100b5a) REAL time: 5 secs 
+
+Phase 2.7  Design Feasibility Check
+Phase 2.7  Design Feasibility Check (Checksum:6100b5a) REAL time: 5 secs 
+
+Phase 3.31  Local Placement Optimization
+Phase 3.31  Local Placement Optimization (Checksum:6100b5a) REAL time: 5 secs 
+
+Phase 4.2  Initial Clock and IO Placement
+
+Phase 4.2  Initial Clock and IO Placement (Checksum:3b19b739) REAL time: 9 secs 
+
+Phase 5.30  Global Clock Region Assignment
+Phase 5.30  Global Clock Region Assignment (Checksum:3b19b739) REAL time: 9 secs 
+
+Phase 6.36  Local Placement Optimization
+Phase 6.36  Local Placement Optimization (Checksum:3b19b739) REAL time: 9 secs 
+
+Phase 7.8  Global Placement
+..................
+...................................................................................................................
+...........

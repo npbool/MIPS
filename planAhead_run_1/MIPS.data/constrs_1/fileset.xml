@@ -2,7 +2,19 @@
 <DARoots Version="1" Minor="12">
 	<FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
 		<Filter Type="Constrs"/>
+		<File Path="$PPRDIR/../ipcore_dir/bl_rom.ncf">
+		</File>
+		<File Path="$PPRDIR/../ipcore_dir/multiplier.ncf">
+		</File>
+		<File Path="$PPRDIR/../ipcore_dir/pro_rom.ncf">
+		</File>
 		<File Path="$PPRDIR/../Controller.ucf">
+		</File>
+		<File Path="$PDATADIR/constrs_1/designprops.xml">
+			<FileInfo SFType="CompatPartsDb"/>
+		</File>
+		<File Path="$PDATADIR/constrs_1/usercols.xml">
+			<FileInfo SFType="UserColsDb"/>
 		</File>
 		<Config>
 			<Option Name="TargetPart" Val="xc3s1200efg320-4"/>

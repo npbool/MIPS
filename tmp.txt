@@ -1,0 +1,1 @@
+clk=>clka, rom_pro_addr=>addra, rom_pro_data=>douta

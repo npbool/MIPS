@@ -13,7 +13,7 @@
 
 # NET "Y[1]" LOC = E10;
 def print_ucf(net, port):
-	outfile.write('NET \"%s\" LOC = %s\n' %(net, port));
+	outfile.write('NET \"%s\" LOC = %s;\n' %(net, port));
 
 file = open('raw_ucf.txt', 'r');
 outfile = open('Controller.ucf', 'w');
@@ -25,6 +25,3 @@ for line in lines:
 	print_ucf(line[0], line[1]);
 
 outfile.write('\n');
-outfile.write(r'# PlanAhead Generated IO constraints'+ '\n\n' );
-outfile.write(r'NET "OP[0]" IOSTANDARD = LVCMOS25;'+ '\n');
-outfile.write(r'NET "Z" IOSTANDARD = LVCMOS25;'+ '\n');

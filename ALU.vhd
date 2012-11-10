@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.numeric_std.all;
 entity ALU is
     Port ( A,B : in STD_LOGIC_VECTOR(31 downto 0);
-			  Code: in STD_LOGIC_VECTOR(3 downto 0);
+			  Code: in STD_LOGIC_VECTOR(5 downto 0);
 			  Func: in STD_LOGIC_VECTOR(5 downto 0);
 			  R : out STD_LOGIC_VECTOR(31 downto 0);
            Zero : out STD_LOGIC;

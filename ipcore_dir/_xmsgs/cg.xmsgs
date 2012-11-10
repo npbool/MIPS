@@ -5,7 +5,49 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="info" file="sim" num="927" delta="new" >Generating component instance &apos;<arg fmt="%s" index="1">multiplier</arg>&apos; of &apos;<arg fmt="%s" index="2">xilinx.com:ip:mult_gen:11.2</arg>&apos; from &apos;<arg fmt="%s" index="3">D:\Xilinx\13.1\ISE_DS\ISE\coregen\ip\xilinx\dsp\com\xilinx\ip\mult_gen_v11_2\component.xml</arg>&apos;.
+<msg type="info" file="sim" num="927" delta="new" >Generating component instance &apos;<arg fmt="%s" index="1">bl_rom</arg>&apos; of &apos;<arg fmt="%s" index="2">xilinx.com:ip:blk_mem_gen:6.1</arg>&apos; from &apos;<arg fmt="%s" index="3">D:\Xilinx\13.1\ISE_DS\ISE\coregen\ip\xilinx\primary\com\xilinx\ip\blk_mem_gen_v6_1\component.xml</arg>&apos;.
+</msg>
+
+<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">A core named &apos;bl_rom&apos; already exists in the project. Output products for this core may be overwritten.</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Resolving generics for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">A core named &apos;bl_rom&apos; already exists in the project. Output products for this core may be overwritten.</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Applying external generics to &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Delivering associated files for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="warning" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Can&apos;t find &apos;VHDL_and_Verilog&apos; synthesis view; using general synthesis view</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Delivering EJava files for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Generating implementation netlist for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Pre-processing HDL files for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Writing VHO instantiation template for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Writing VEO instantiation template for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Writing VHDL behavioral simulation model for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Writing Verilog behavioral simulation model for &apos;bl_rom&apos;...</arg>
+</msg>
+
+<msg type="info" file="sim" num="0" delta="new" ><arg fmt="%s" index="1">Generating SYM schematic symbol for &apos;bl_rom&apos;...</arg>
 </msg>
 
 </messages>

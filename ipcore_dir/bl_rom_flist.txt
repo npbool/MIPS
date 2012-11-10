@@ -1,6 +1,8 @@
 # Output products list for <bl_rom>
+_xmsgs\pn_parser.xmsgs
 bl_rom.asy
 bl_rom.gise
+bl_rom.mif
 bl_rom.ngc
 bl_rom.sym
 bl_rom.v

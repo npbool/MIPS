@@ -42,6 +42,8 @@ PORT(
 		
 		clk,rst:IN STD_LOGIC;
 		
+		--debug 
+		Seg7_out: OUT STD_LOGIC_VECTOR(0 to 6);
 		--管脚，顶层引入
 		Rom_switch:IN STD_LOGIC;
 		bl_addr,pro_addr:OUT STD_LOGIC_VECTOR(9 DOWNTO 0);
@@ -58,7 +60,8 @@ PORT(
 		
 		Flash_addr:OUT STD_LOGIC_VECTOR(22 downto 0);
 		Flash_data:INOUT STD_LOGIC_VECTOR(15 downto 0);
-		Flash_byte,Flash_ce,Flash_ce1,Flash_ce2,Flash_oe,Flash_rp,Flash_sts,Flash_vpen,Flash_we:OUT STD_LOGIC
+		Flash_byte,Flash_ce,Flash_ce1,Flash_ce2,Flash_oe,Flash_rp,Flash_sts,Flash_vpen,Flash_we:OUT STD_LOGIC		
+		
 	);
 	
 end Mem;
@@ -101,16 +104,18 @@ begin
 			--清零
 			if Addr(31 downto 29)="100" or Addr(31 downto 29)="101" then
 				actual_addr <= "000" & Addr(28 downto 0);
-			end if;			
+			else 
+				actual_addr <= Addr;
+			end if;	
 			
 			Done<='0';
 			if actual_addr(31 downto 12)=x"1FC00" then
 				--ROM
-				bl_addr<=actual_addr(9 downto 0);
-				pro_addr<=actual_addr(9 downto 0);
+				bl_addr<=actual_addr(11 downto 2);
+				pro_addr<=actual_addr(11 downto 2);
 				op<="010";
-				count<="000";		
-				working<='1';				
+				count<="011";
+				working<='1';
 			elsif actual_addr=x"1FD003F8" then
 				--串口
 				Ram1_en<='1';
@@ -255,5 +260,14 @@ begin
 			end case;
 		end if;
 	end PROCESS;	
+	
+	PROCESS(working,op)
+	begin
+		if working='0' then
+			Seg7_out <= "0000000";
+		else
+			Seg7_out <= op & "0000";
+		end if;
+	end process;
 end Behavioral;
 

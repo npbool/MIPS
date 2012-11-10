@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 13.1
-# Date: Thu Nov 08 14:12:09 2012
+# Date: Sat Nov 10 06:34:37 2012
 #
 ##############################################################
 #
@@ -42,7 +42,7 @@ CSET axi_id_width=4
 CSET axi_slave_type=Memory_Slave
 CSET axi_type=AXI4_Full
 CSET byte_size=9
-CSET coe_file=no_coe_file_loaded
+CSET coe_file=E:\Course\Junior1\CO\Final\Project\MIPS\testins.coe
 CSET collision_warnings=ALL
 CSET component_name=bl_rom
 CSET disable_collision_warnings=false
@@ -54,7 +54,7 @@ CSET enable_b=Always_Enabled
 CSET error_injection_type=Single_Bit_Error_Injection
 CSET fill_remaining_memory_locations=false
 CSET interface_type=Native
-CSET load_init_file=false
+CSET load_init_file=true
 CSET memory_type=Single_Port_ROM
 CSET operating_mode_a=WRITE_FIRST
 CSET operating_mode_b=WRITE_FIRST
@@ -98,4 +98,4 @@ CSET write_width_b=32
 MISC pkg_timestamp=2011-02-03T22:20:43.000Z
 # END Extra information
 GENERATE
-# CRC: 4b8a827e
+# CRC: 55809e17
