@@ -69,7 +69,7 @@ architecture Behavioral of Mem is
 
 signal working:STD_LOGIC:='0';
 signal count:STD_LOGIC_VECTOR(2 downto 0);
-signal op:STD_LOGIC_VECTOR(2 downto 0); 
+signal op:STD_LOGIC_VECTOR(3 downto 0); 
 
 signal tmp:STD_LOGIC_VECTOR(1 downto 0);
 --000:RamRead,001:RamWrite
@@ -96,13 +96,15 @@ begin
 	Flash_vpen<='1';
 	
 	--Seg7_out <= "0000000" when working='0' else op & "0000";
-	
 	PROCESS(clk, rst)
 	variable actual_addr:STD_LOGIC_VECTOR(31 downto 0);
 	begin
 		if rst = '0' then
 			-- todo 			
 			working <= '0';		
+			Rdn<='1';
+			Wrn<='1';
+			Done<='0';
 		elsif clk'event and clk='1' then 
 			if working='0' and En='1' then
 				--µ±Ç°¿ÕÏÐ								
@@ -117,36 +119,33 @@ begin
 				Done<='0';
 				if actual_addr(31 downto 12)=x"1FC00" then
 					--ROM
-					Seg7_out<="0001111";
+					Seg7_out<="1111110";
 					bl_addr<=actual_addr(11 downto 2);
 					pro_addr<=actual_addr(11 downto 2);
-					op<="010";
+					op<="0010";
 					count<="000";
 					working<='1';
 				elsif actual_addr=x"1FD003F8" then
 					--´®¿Ú
+					Seg7_out<="0000010"; -- serial 2
 					Ram1_en<='1';
 					Ram1_oe<='1';
 					Ram1_rw<='1';
 					if Rw='0' then
 						--read serial
-						if Data_ready='1' then
-							Rdn<='1';
-							Wrn<='0';
+						if Data_ready='1' then							
 							Ram1_data<="ZZZZZZZZZZZZZZZZ";
-							op<="100";
+							op<="1100";
 							working<='1';
-							count<="111";	
+							count<="000";
 						end if;
 					else
 						--write serial
-						if Tbre='1' and Tsre='1' then
-							Rdn<='0';
-							Wrn<='1';
+						if Tbre='1' and Tsre='1' then							
 							Ram1_data<=DataIn(15 downto 0);
-							op<="101";
+							op<="1101";
 							working<='1';
-							count<="111";
+							count<="000";
 						end if;
 					end if;				
 				elsif actual_addr=x"1FD003FC" then
@@ -176,8 +175,8 @@ begin
 					end if;
 					null;
 				elsif Rw='0' then
-					--read Ram
-					Seg7_out<="0101010";
+					--read Ram 3
+					Seg7_out<="0000011";
 					Ram1_en<='0';
 					Ram1_oe<='0';
 					Ram1_rw<='1';
@@ -191,10 +190,11 @@ begin
 					Ram2_data<="ZZZZZZZZZZZZZZZZ";
 					Ram2_rw<='1';	
 					working<='1';
-					op<="000";
+					op<="0000";
 					count<="011";
 				else
-					--write Ram		
+					--write Ram		4
+					Seg7_out<="0000100";
 					Ram1_en<='0';
 					Ram1_oe<='0';
 					Ram1_rw<='0';
@@ -208,42 +208,54 @@ begin
 					Ram2_data<=DataIn(15 downto 0);
 					Ram2_rw<='0';		
 					working<='1';
-					op<="001";
+					op<="0001";
 					count<="011";
-				end if;			
+				end if;
 			elsif working='1' then
 				case count is
 				when "000" =>
 					--done
 					case op is
-					when "010" =>
+					when "0010" =>
 						--prev rom				
-						if Rom_switch='0' then
-							DataOut<= bl_data;
+						if Rom_switch = '0' then
+							DataOut <= bl_data;
 						else
-							DataOut<= pro_data;
+							DataOut <= pro_data;
 						end if;
-						working<='0';
-						Done<='1';
-					when "100" => --prev serial read
-						DataOut<=x"0000"&Ram1_data;
+						working <= '0';
+						Done <= '1';
+					when "1100" =>
 						Rdn<='0';
-						working<='0';
-						Done<='1';
-					when "101" => --prev serial write
+						Wrn<='1';
+						op<="0100";
+						count<="111";
+					when "1101" =>
+						Rdn<='1';
 						Wrn<='0';
+						op<="0101";
+						count<="111";						
+					when "0100" => --prev serial read						
+						DataOut<=x"0000"&Ram1_data;
+						Rdn<='1';
+						Wrn<='1';
 						working<='0';
 						Done<='1';
-					when "110" => --prev flash read
+					when "0101" => --prev serial write
+						Rdn<='1';
+						Wrn<='1';
+						working<='0';
+						Done<='1';
+					when "0110" => --prev flash read
 						null;
-					when "111" => --prev flash write
+					when "0111" => --prev flash write
 						null;
-					when "000" => --prev ram read;					
+					when "0000" => --prev ram read;					
 						Done<='1';
 						DataOut(31 downto 16)<=Ram1_data;
 						DataOut(15 downto 0)<=Ram2_data;
 						working<='0';					
-					when "001" => --prev ram write				
+					when "0001" => --prev ram write				
 						Done<='1';
 						working<='0';
 					when others=>

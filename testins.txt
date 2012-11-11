@@ -1,26 +1,17 @@
-main:
-li $8,0x1FD003F8
-li $9,0x23
-sw $9,0($8)
-lw $9,0($8)
-sw $9,0($8)
-addiu $8,$0,12
-addiu $9,$0,21
-addu $10,$9,$2
-bne $8,$9,NE
-nop
-xor $8,$8,$8
-NE:
-addiu $11,$0,2
-sll $8,$8,1
-sllv $8,$8,$11
-mult $8,$9
-mfhi $10
-mflo $11
-move $8,$0
-lui $8,0x8000
-sw $9,4($8)
-lw $10,4($8)
-
-
-
+addiu $9, $0, 1
+addu $9, $9, $9
+li $8, 1
+subu $10, $8, $9
+hello:
+mult $10, $10, $9
+beq $8 $9 hello
+bgez $9 hello
+bgtz $9 hello
+bne $8 $9 hello
+j hello
+jal hello
+li $11 1
+sll $11 $11 1
+srl $11 $11 1
+sllv $11 $11 $11
+srlv $11 $11 $8

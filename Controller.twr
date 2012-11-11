@@ -40,23 +40,60 @@ Data Sheet report:
 All values displayed in nanoseconds (ns)
 
 Setup/Hold to clock std_clk
-------------+------------+------------+------------------+--------+
-            |Max Setup to|Max Hold to |                  | Clock  |
-Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
-------------+------------+------------+------------------+--------+
-reset       |    9.298(R)|    2.944(R)|clk               |   0.000|
-------------+------------+------------+------------------+--------+
+-------------+------------+------------+------------------+--------+
+             |Max Setup to|Max Hold to |                  | Clock  |
+Source       | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+-------------+------------+------------+------------------+--------+
+data_ready   |    7.130(R)|    3.493(R)|clk               |   0.000|
+ram1_data<0> |    1.433(R)|    4.019(R)|clk               |   0.000|
+ram1_data<1> |    1.517(R)|    2.438(R)|clk               |   0.000|
+ram1_data<2> |    1.014(R)|    3.152(R)|clk               |   0.000|
+ram1_data<3> |    0.695(R)|    3.889(R)|clk               |   0.000|
+ram1_data<4> |   -0.204(R)|    3.782(R)|clk               |   0.000|
+ram1_data<5> |    0.458(R)|    3.842(R)|clk               |   0.000|
+ram1_data<6> |    0.042(R)|    3.751(R)|clk               |   0.000|
+ram1_data<7> |    0.107(R)|    3.813(R)|clk               |   0.000|
+ram1_data<8> |    0.825(R)|    3.231(R)|clk               |   0.000|
+ram1_data<9> |    0.917(R)|    3.442(R)|clk               |   0.000|
+ram1_data<10>|   -0.070(R)|    4.053(R)|clk               |   0.000|
+ram1_data<11>|    0.290(R)|    3.536(R)|clk               |   0.000|
+ram1_data<12>|    1.114(R)|    3.095(R)|clk               |   0.000|
+ram1_data<13>|    1.191(R)|    2.802(R)|clk               |   0.000|
+ram1_data<14>|    2.074(R)|    3.561(R)|clk               |   0.000|
+ram1_data<15>|    0.200(R)|    4.086(R)|clk               |   0.000|
+ram2_data<0> |   -0.764(R)|    3.974(R)|clk               |   0.000|
+ram2_data<1> |    0.361(R)|    3.076(R)|clk               |   0.000|
+ram2_data<2> |   -0.702(R)|    3.917(R)|clk               |   0.000|
+ram2_data<3> |    0.116(R)|    3.272(R)|clk               |   0.000|
+ram2_data<4> |   -0.866(R)|    4.055(R)|clk               |   0.000|
+ram2_data<5> |   -0.593(R)|    3.837(R)|clk               |   0.000|
+ram2_data<6> |   -0.852(R)|    4.044(R)|clk               |   0.000|
+ram2_data<7> |   -0.692(R)|    3.908(R)|clk               |   0.000|
+ram2_data<8> |   -1.078(R)|    4.265(R)|clk               |   0.000|
+ram2_data<9> |    0.219(R)|    3.201(R)|clk               |   0.000|
+ram2_data<10>|   -0.060(R)|    3.403(R)|clk               |   0.000|
+ram2_data<11>|   -0.705(R)|    3.921(R)|clk               |   0.000|
+ram2_data<12>|    0.038(R)|    3.348(R)|clk               |   0.000|
+ram2_data<13>|   -1.042(R)|    4.237(R)|clk               |   0.000|
+ram2_data<14>|    0.334(R)|    3.137(R)|clk               |   0.000|
+ram2_data<15>|   -0.465(R)|    3.775(R)|clk               |   0.000|
+reset        |    9.751(R)|    7.069(R)|clk               |   0.000|
+rom_switch   |    1.487(R)|    5.372(R)|clk               |   0.000|
+switches<13> |    1.643(R)|    5.444(R)|clk               |   0.000|
+tbre         |    7.598(R)|    3.960(R)|clk               |   0.000|
+tsre         |    4.936(R)|    5.606(R)|clk               |   0.000|
+-------------+------------+------------+------------------+--------+
 
 Setup/Hold to clock switches<5>
 ------------+------------+------------+------------------------+--------+
             |Max Setup to|Max Hold to |                        | Clock  |
 Source      | clk (edge) | clk (edge) |Internal Clock(s)       | Phase  |
 ------------+------------+------------+------------------------+--------+
-switches<0> |    3.644(F)|    7.332(F)|LED_display_data_not0002|   0.000|
-switches<1> |    3.728(F)|    6.597(F)|LED_display_data_not0002|   0.000|
-switches<2> |    4.980(F)|    6.449(F)|LED_display_data_not0002|   0.000|
-switches<3> |    4.436(F)|    5.339(F)|LED_display_data_not0002|   0.000|
-switches<4> |    8.109(F)|    5.714(F)|LED_display_data_not0002|   0.000|
+switches<0> |    4.379(F)|    3.109(F)|LED_display_data_not0002|   0.000|
+switches<1> |    4.382(F)|    2.020(F)|LED_display_data_not0002|   0.000|
+switches<2> |    8.298(F)|    2.106(F)|LED_display_data_not0002|   0.000|
+switches<3> |    7.422(F)|    2.028(F)|LED_display_data_not0002|   0.000|
+switches<4> |   14.438(F)|    2.115(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------+------------------------+--------+
 
 Setup/Hold to clock switches<6>
@@ -64,11 +101,11 @@ Setup/Hold to clock switches<6>
             |Max Setup to|Max Hold to |                        | Clock  |
 Source      | clk (edge) | clk (edge) |Internal Clock(s)       | Phase  |
 ------------+------------+------------+------------------------+--------+
-switches<0> |    4.104(F)|    6.757(F)|LED_display_data_not0002|   0.000|
-switches<1> |    4.188(F)|    6.022(F)|LED_display_data_not0002|   0.000|
-switches<2> |    5.440(F)|    5.874(F)|LED_display_data_not0002|   0.000|
-switches<3> |    4.896(F)|    4.764(F)|LED_display_data_not0002|   0.000|
-switches<4> |    8.569(F)|    5.139(F)|LED_display_data_not0002|   0.000|
+switches<0> |    4.312(F)|    3.193(F)|LED_display_data_not0002|   0.000|
+switches<1> |    4.315(F)|    2.104(F)|LED_display_data_not0002|   0.000|
+switches<2> |    8.231(F)|    2.190(F)|LED_display_data_not0002|   0.000|
+switches<3> |    7.355(F)|    2.112(F)|LED_display_data_not0002|   0.000|
+switches<4> |   14.371(F)|    2.199(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------+------------------------+--------+
 
 Setup/Hold to clock switches<8>
@@ -76,11 +113,11 @@ Setup/Hold to clock switches<8>
             |Max Setup to|Max Hold to |                        | Clock  |
 Source      | clk (edge) | clk (edge) |Internal Clock(s)       | Phase  |
 ------------+------------+------------+------------------------+--------+
-switches<0> |    6.151(F)|    4.198(F)|LED_display_data_not0002|   0.000|
-switches<1> |    6.235(F)|    3.463(F)|LED_display_data_not0002|   0.000|
-switches<2> |    7.487(F)|    3.315(F)|LED_display_data_not0002|   0.000|
-switches<3> |    6.943(F)|    2.205(F)|LED_display_data_not0002|   0.000|
-switches<4> |   10.616(F)|    2.580(F)|LED_display_data_not0002|   0.000|
+switches<0> |    4.814(F)|    2.565(F)|LED_display_data_not0002|   0.000|
+switches<1> |    4.817(F)|    1.476(F)|LED_display_data_not0002|   0.000|
+switches<2> |    8.733(F)|    1.562(F)|LED_display_data_not0002|   0.000|
+switches<3> |    7.857(F)|    1.484(F)|LED_display_data_not0002|   0.000|
+switches<4> |   14.873(F)|    1.571(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------+------------------------+--------+
 
 Setup/Hold to clock switches<9>
@@ -88,33 +125,106 @@ Setup/Hold to clock switches<9>
             |Max Setup to|Max Hold to |                        | Clock  |
 Source      | clk (edge) | clk (edge) |Internal Clock(s)       | Phase  |
 ------------+------------+------------+------------------------+--------+
-switches<0> |    6.372(F)|    3.923(F)|LED_display_data_not0002|   0.000|
-switches<1> |    6.456(F)|    3.188(F)|LED_display_data_not0002|   0.000|
-switches<2> |    7.708(F)|    3.040(F)|LED_display_data_not0002|   0.000|
-switches<3> |    7.164(F)|    1.930(F)|LED_display_data_not0002|   0.000|
-switches<4> |   10.837(F)|    2.305(F)|LED_display_data_not0002|   0.000|
+switches<0> |    5.390(F)|    1.846(F)|LED_display_data_not0002|   0.000|
+switches<1> |    5.393(F)|    0.757(F)|LED_display_data_not0002|   0.000|
+switches<2> |    9.309(F)|    0.843(F)|LED_display_data_not0002|   0.000|
+switches<3> |    8.433(F)|    0.765(F)|LED_display_data_not0002|   0.000|
+switches<4> |   15.449(F)|    0.852(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------+------------------------+--------+
-
-Setup/Hold to clock switches<14>
-------------+------------+------------+------------------+--------+
-            |Max Setup to|Max Hold to |                  | Clock  |
-Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
-------------+------------+------------+------------------+--------+
-reset       |    9.107(R)|    3.182(R)|clk               |   0.000|
-------------+------------+------------+------------------+--------+
 
 Clock std_clk to Pad
 -------------+------------+------------------+--------+
              | clk (edge) |                  | Clock  |
 Destination  |   to PAD   |Internal Clock(s) | Phase  |
 -------------+------------+------------------+--------+
-seg7_out_2<0>|   16.710(R)|clk               |   0.000|
-seg7_out_2<1>|   14.968(R)|clk               |   0.000|
-seg7_out_2<2>|   14.985(R)|clk               |   0.000|
-seg7_out_2<3>|   17.089(R)|clk               |   0.000|
-seg7_out_2<4>|   15.062(R)|clk               |   0.000|
-seg7_out_2<5>|   18.826(R)|clk               |   0.000|
-seg7_out_2<6>|   17.456(R)|clk               |   0.000|
+ram1_addr<0> |   14.390(R)|clk               |   0.000|
+ram1_addr<1> |   15.092(R)|clk               |   0.000|
+ram1_addr<2> |   14.560(R)|clk               |   0.000|
+ram1_addr<3> |   14.743(R)|clk               |   0.000|
+ram1_addr<4> |   15.069(R)|clk               |   0.000|
+ram1_addr<5> |   14.789(R)|clk               |   0.000|
+ram1_addr<6> |   15.003(R)|clk               |   0.000|
+ram1_addr<7> |   15.528(R)|clk               |   0.000|
+ram1_addr<8> |   15.383(R)|clk               |   0.000|
+ram1_addr<9> |   15.292(R)|clk               |   0.000|
+ram1_addr<10>|   15.227(R)|clk               |   0.000|
+ram1_addr<11>|   15.600(R)|clk               |   0.000|
+ram1_addr<12>|   15.666(R)|clk               |   0.000|
+ram1_addr<13>|   15.717(R)|clk               |   0.000|
+ram1_addr<14>|   15.628(R)|clk               |   0.000|
+ram1_addr<15>|   16.005(R)|clk               |   0.000|
+ram1_addr<16>|   15.264(R)|clk               |   0.000|
+ram1_addr<17>|   15.277(R)|clk               |   0.000|
+ram1_data<0> |   16.167(R)|clk               |   0.000|
+ram1_data<1> |   16.189(R)|clk               |   0.000|
+ram1_data<2> |   15.930(R)|clk               |   0.000|
+ram1_data<3> |   15.916(R)|clk               |   0.000|
+ram1_data<4> |   16.215(R)|clk               |   0.000|
+ram1_data<5> |   15.760(R)|clk               |   0.000|
+ram1_data<6> |   15.148(R)|clk               |   0.000|
+ram1_data<7> |   15.136(R)|clk               |   0.000|
+ram1_data<8> |   15.487(R)|clk               |   0.000|
+ram1_data<9> |   15.393(R)|clk               |   0.000|
+ram1_data<10>|   14.824(R)|clk               |   0.000|
+ram1_data<11>|   15.105(R)|clk               |   0.000|
+ram1_data<12>|   15.374(R)|clk               |   0.000|
+ram1_data<13>|   15.736(R)|clk               |   0.000|
+ram1_data<14>|   14.358(R)|clk               |   0.000|
+ram1_data<15>|   14.313(R)|clk               |   0.000|
+ram1_en      |   14.851(R)|clk               |   0.000|
+ram1_oe      |   14.955(R)|clk               |   0.000|
+ram1_rw      |   15.207(R)|clk               |   0.000|
+ram2_addr<0> |   14.854(R)|clk               |   0.000|
+ram2_addr<1> |   15.160(R)|clk               |   0.000|
+ram2_addr<2> |   14.546(R)|clk               |   0.000|
+ram2_addr<3> |   15.144(R)|clk               |   0.000|
+ram2_addr<4> |   15.138(R)|clk               |   0.000|
+ram2_addr<5> |   15.194(R)|clk               |   0.000|
+ram2_addr<6> |   14.601(R)|clk               |   0.000|
+ram2_addr<7> |   14.473(R)|clk               |   0.000|
+ram2_addr<8> |   14.633(R)|clk               |   0.000|
+ram2_addr<9> |   14.694(R)|clk               |   0.000|
+ram2_addr<10>|   14.460(R)|clk               |   0.000|
+ram2_addr<11>|   14.546(R)|clk               |   0.000|
+ram2_addr<12>|   14.904(R)|clk               |   0.000|
+ram2_addr<13>|   15.073(R)|clk               |   0.000|
+ram2_addr<14>|   14.862(R)|clk               |   0.000|
+ram2_addr<15>|   15.033(R)|clk               |   0.000|
+ram2_addr<16>|   14.452(R)|clk               |   0.000|
+ram2_addr<17>|   14.324(R)|clk               |   0.000|
+ram2_data<0> |   13.734(R)|clk               |   0.000|
+ram2_data<1> |   14.818(R)|clk               |   0.000|
+ram2_data<2> |   14.572(R)|clk               |   0.000|
+ram2_data<3> |   14.568(R)|clk               |   0.000|
+ram2_data<4> |   13.630(R)|clk               |   0.000|
+ram2_data<5> |   14.009(R)|clk               |   0.000|
+ram2_data<6> |   14.482(R)|clk               |   0.000|
+ram2_data<7> |   13.880(R)|clk               |   0.000|
+ram2_data<8> |   14.026(R)|clk               |   0.000|
+ram2_data<9> |   14.670(R)|clk               |   0.000|
+ram2_data<10>|   13.689(R)|clk               |   0.000|
+ram2_data<11>|   13.469(R)|clk               |   0.000|
+ram2_data<12>|   14.056(R)|clk               |   0.000|
+ram2_data<13>|   14.874(R)|clk               |   0.000|
+ram2_data<14>|   13.672(R)|clk               |   0.000|
+ram2_data<15>|   14.591(R)|clk               |   0.000|
+ram2_rw      |   13.768(R)|clk               |   0.000|
+rdn          |   15.501(R)|clk               |   0.000|
+seg7_out_1<0>|   14.458(R)|clk               |   0.000|
+seg7_out_1<1>|   14.460(R)|clk               |   0.000|
+seg7_out_1<2>|   14.740(R)|clk               |   0.000|
+seg7_out_1<3>|   14.504(R)|clk               |   0.000|
+seg7_out_1<4>|   14.368(R)|clk               |   0.000|
+seg7_out_1<5>|   14.362(R)|clk               |   0.000|
+seg7_out_1<6>|   15.317(R)|clk               |   0.000|
+seg7_out_2<0>|   21.152(R)|clk               |   0.000|
+seg7_out_2<1>|   21.267(R)|clk               |   0.000|
+seg7_out_2<2>|   20.153(R)|clk               |   0.000|
+seg7_out_2<3>|   20.728(R)|clk               |   0.000|
+seg7_out_2<4>|   18.842(R)|clk               |   0.000|
+seg7_out_2<5>|   19.687(R)|clk               |   0.000|
+seg7_out_2<6>|   20.700(R)|clk               |   0.000|
+wrn          |   15.506(R)|clk               |   0.000|
 -------------+------------+------------------+--------+
 
 Clock switches<5> to Pad
@@ -122,22 +232,22 @@ Clock switches<5> to Pad
             | clk (edge) |                        | Clock  |
 Destination |   to PAD   |Internal Clock(s)       | Phase  |
 ------------+------------+------------------------+--------+
-LEDS<0>     |   20.020(F)|LED_display_data_not0002|   0.000|
-LEDS<1>     |   19.933(F)|LED_display_data_not0002|   0.000|
-LEDS<2>     |   19.573(F)|LED_display_data_not0002|   0.000|
-LEDS<3>     |   20.401(F)|LED_display_data_not0002|   0.000|
-LEDS<4>     |   20.246(F)|LED_display_data_not0002|   0.000|
-LEDS<5>     |   19.580(F)|LED_display_data_not0002|   0.000|
-LEDS<6>     |   20.052(F)|LED_display_data_not0002|   0.000|
-LEDS<7>     |   19.451(F)|LED_display_data_not0002|   0.000|
-LEDS<8>     |   20.833(F)|LED_display_data_not0002|   0.000|
-LEDS<9>     |   19.786(F)|LED_display_data_not0002|   0.000|
-LEDS<10>    |   20.946(F)|LED_display_data_not0002|   0.000|
-LEDS<11>    |   20.189(F)|LED_display_data_not0002|   0.000|
-LEDS<12>    |   19.692(F)|LED_display_data_not0002|   0.000|
-LEDS<13>    |   20.856(F)|LED_display_data_not0002|   0.000|
-LEDS<14>    |   20.897(F)|LED_display_data_not0002|   0.000|
-LEDS<15>    |   20.615(F)|LED_display_data_not0002|   0.000|
+LEDS<0>     |   17.221(F)|LED_display_data_not0002|   0.000|
+LEDS<1>     |   16.388(F)|LED_display_data_not0002|   0.000|
+LEDS<2>     |   16.773(F)|LED_display_data_not0002|   0.000|
+LEDS<3>     |   17.189(F)|LED_display_data_not0002|   0.000|
+LEDS<4>     |   16.612(F)|LED_display_data_not0002|   0.000|
+LEDS<5>     |   16.350(F)|LED_display_data_not0002|   0.000|
+LEDS<6>     |   16.523(F)|LED_display_data_not0002|   0.000|
+LEDS<7>     |   17.412(F)|LED_display_data_not0002|   0.000|
+LEDS<8>     |   17.392(F)|LED_display_data_not0002|   0.000|
+LEDS<9>     |   17.247(F)|LED_display_data_not0002|   0.000|
+LEDS<10>    |   17.003(F)|LED_display_data_not0002|   0.000|
+LEDS<11>    |   17.616(F)|LED_display_data_not0002|   0.000|
+LEDS<12>    |   17.771(F)|LED_display_data_not0002|   0.000|
+LEDS<13>    |   16.733(F)|LED_display_data_not0002|   0.000|
+LEDS<14>    |   17.995(F)|LED_display_data_not0002|   0.000|
+LEDS<15>    |   17.697(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------------------+--------+
 
 Clock switches<6> to Pad
@@ -145,22 +255,22 @@ Clock switches<6> to Pad
             | clk (edge) |                        | Clock  |
 Destination |   to PAD   |Internal Clock(s)       | Phase  |
 ------------+------------+------------------------+--------+
-LEDS<0>     |   19.445(F)|LED_display_data_not0002|   0.000|
-LEDS<1>     |   19.358(F)|LED_display_data_not0002|   0.000|
-LEDS<2>     |   18.998(F)|LED_display_data_not0002|   0.000|
-LEDS<3>     |   19.826(F)|LED_display_data_not0002|   0.000|
-LEDS<4>     |   19.671(F)|LED_display_data_not0002|   0.000|
-LEDS<5>     |   19.005(F)|LED_display_data_not0002|   0.000|
-LEDS<6>     |   19.477(F)|LED_display_data_not0002|   0.000|
-LEDS<7>     |   18.876(F)|LED_display_data_not0002|   0.000|
-LEDS<8>     |   20.258(F)|LED_display_data_not0002|   0.000|
-LEDS<9>     |   19.211(F)|LED_display_data_not0002|   0.000|
-LEDS<10>    |   20.371(F)|LED_display_data_not0002|   0.000|
-LEDS<11>    |   19.614(F)|LED_display_data_not0002|   0.000|
-LEDS<12>    |   19.117(F)|LED_display_data_not0002|   0.000|
-LEDS<13>    |   20.281(F)|LED_display_data_not0002|   0.000|
-LEDS<14>    |   20.322(F)|LED_display_data_not0002|   0.000|
-LEDS<15>    |   20.040(F)|LED_display_data_not0002|   0.000|
+LEDS<0>     |   17.305(F)|LED_display_data_not0002|   0.000|
+LEDS<1>     |   16.472(F)|LED_display_data_not0002|   0.000|
+LEDS<2>     |   16.857(F)|LED_display_data_not0002|   0.000|
+LEDS<3>     |   17.273(F)|LED_display_data_not0002|   0.000|
+LEDS<4>     |   16.696(F)|LED_display_data_not0002|   0.000|
+LEDS<5>     |   16.434(F)|LED_display_data_not0002|   0.000|
+LEDS<6>     |   16.607(F)|LED_display_data_not0002|   0.000|
+LEDS<7>     |   17.496(F)|LED_display_data_not0002|   0.000|
+LEDS<8>     |   17.476(F)|LED_display_data_not0002|   0.000|
+LEDS<9>     |   17.331(F)|LED_display_data_not0002|   0.000|
+LEDS<10>    |   17.087(F)|LED_display_data_not0002|   0.000|
+LEDS<11>    |   17.700(F)|LED_display_data_not0002|   0.000|
+LEDS<12>    |   17.855(F)|LED_display_data_not0002|   0.000|
+LEDS<13>    |   16.817(F)|LED_display_data_not0002|   0.000|
+LEDS<14>    |   18.079(F)|LED_display_data_not0002|   0.000|
+LEDS<15>    |   17.781(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------------------+--------+
 
 Clock switches<8> to Pad
@@ -168,22 +278,22 @@ Clock switches<8> to Pad
             | clk (edge) |                        | Clock  |
 Destination |   to PAD   |Internal Clock(s)       | Phase  |
 ------------+------------+------------------------+--------+
-LEDS<0>     |   16.886(F)|LED_display_data_not0002|   0.000|
-LEDS<1>     |   16.799(F)|LED_display_data_not0002|   0.000|
-LEDS<2>     |   16.439(F)|LED_display_data_not0002|   0.000|
-LEDS<3>     |   17.267(F)|LED_display_data_not0002|   0.000|
-LEDS<4>     |   17.112(F)|LED_display_data_not0002|   0.000|
-LEDS<5>     |   16.446(F)|LED_display_data_not0002|   0.000|
-LEDS<6>     |   16.918(F)|LED_display_data_not0002|   0.000|
-LEDS<7>     |   16.317(F)|LED_display_data_not0002|   0.000|
-LEDS<8>     |   17.699(F)|LED_display_data_not0002|   0.000|
-LEDS<9>     |   16.652(F)|LED_display_data_not0002|   0.000|
-LEDS<10>    |   17.812(F)|LED_display_data_not0002|   0.000|
-LEDS<11>    |   17.055(F)|LED_display_data_not0002|   0.000|
-LEDS<12>    |   16.558(F)|LED_display_data_not0002|   0.000|
-LEDS<13>    |   17.722(F)|LED_display_data_not0002|   0.000|
-LEDS<14>    |   17.763(F)|LED_display_data_not0002|   0.000|
-LEDS<15>    |   17.481(F)|LED_display_data_not0002|   0.000|
+LEDS<0>     |   16.677(F)|LED_display_data_not0002|   0.000|
+LEDS<1>     |   15.844(F)|LED_display_data_not0002|   0.000|
+LEDS<2>     |   16.229(F)|LED_display_data_not0002|   0.000|
+LEDS<3>     |   16.645(F)|LED_display_data_not0002|   0.000|
+LEDS<4>     |   16.068(F)|LED_display_data_not0002|   0.000|
+LEDS<5>     |   15.806(F)|LED_display_data_not0002|   0.000|
+LEDS<6>     |   15.979(F)|LED_display_data_not0002|   0.000|
+LEDS<7>     |   16.868(F)|LED_display_data_not0002|   0.000|
+LEDS<8>     |   16.848(F)|LED_display_data_not0002|   0.000|
+LEDS<9>     |   16.703(F)|LED_display_data_not0002|   0.000|
+LEDS<10>    |   16.459(F)|LED_display_data_not0002|   0.000|
+LEDS<11>    |   17.072(F)|LED_display_data_not0002|   0.000|
+LEDS<12>    |   17.227(F)|LED_display_data_not0002|   0.000|
+LEDS<13>    |   16.189(F)|LED_display_data_not0002|   0.000|
+LEDS<14>    |   17.451(F)|LED_display_data_not0002|   0.000|
+LEDS<15>    |   17.153(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------------------+--------+
 
 Clock switches<9> to Pad
@@ -191,44 +301,30 @@ Clock switches<9> to Pad
             | clk (edge) |                        | Clock  |
 Destination |   to PAD   |Internal Clock(s)       | Phase  |
 ------------+------------+------------------------+--------+
-LEDS<0>     |   16.611(F)|LED_display_data_not0002|   0.000|
-LEDS<1>     |   16.524(F)|LED_display_data_not0002|   0.000|
-LEDS<2>     |   16.164(F)|LED_display_data_not0002|   0.000|
-LEDS<3>     |   16.992(F)|LED_display_data_not0002|   0.000|
-LEDS<4>     |   16.837(F)|LED_display_data_not0002|   0.000|
-LEDS<5>     |   16.171(F)|LED_display_data_not0002|   0.000|
-LEDS<6>     |   16.643(F)|LED_display_data_not0002|   0.000|
-LEDS<7>     |   16.042(F)|LED_display_data_not0002|   0.000|
-LEDS<8>     |   17.424(F)|LED_display_data_not0002|   0.000|
-LEDS<9>     |   16.377(F)|LED_display_data_not0002|   0.000|
-LEDS<10>    |   17.537(F)|LED_display_data_not0002|   0.000|
-LEDS<11>    |   16.780(F)|LED_display_data_not0002|   0.000|
-LEDS<12>    |   16.283(F)|LED_display_data_not0002|   0.000|
-LEDS<13>    |   17.447(F)|LED_display_data_not0002|   0.000|
-LEDS<14>    |   17.488(F)|LED_display_data_not0002|   0.000|
-LEDS<15>    |   17.206(F)|LED_display_data_not0002|   0.000|
+LEDS<0>     |   15.958(F)|LED_display_data_not0002|   0.000|
+LEDS<1>     |   15.125(F)|LED_display_data_not0002|   0.000|
+LEDS<2>     |   15.510(F)|LED_display_data_not0002|   0.000|
+LEDS<3>     |   15.926(F)|LED_display_data_not0002|   0.000|
+LEDS<4>     |   15.349(F)|LED_display_data_not0002|   0.000|
+LEDS<5>     |   15.087(F)|LED_display_data_not0002|   0.000|
+LEDS<6>     |   15.260(F)|LED_display_data_not0002|   0.000|
+LEDS<7>     |   16.149(F)|LED_display_data_not0002|   0.000|
+LEDS<8>     |   16.129(F)|LED_display_data_not0002|   0.000|
+LEDS<9>     |   15.984(F)|LED_display_data_not0002|   0.000|
+LEDS<10>    |   15.740(F)|LED_display_data_not0002|   0.000|
+LEDS<11>    |   16.353(F)|LED_display_data_not0002|   0.000|
+LEDS<12>    |   16.508(F)|LED_display_data_not0002|   0.000|
+LEDS<13>    |   15.470(F)|LED_display_data_not0002|   0.000|
+LEDS<14>    |   16.732(F)|LED_display_data_not0002|   0.000|
+LEDS<15>    |   16.434(F)|LED_display_data_not0002|   0.000|
 ------------+------------+------------------------+--------+
-
-Clock switches<14> to Pad
--------------+------------+------------------+--------+
-             | clk (edge) |                  | Clock  |
-Destination  |   to PAD   |Internal Clock(s) | Phase  |
--------------+------------+------------------+--------+
-seg7_out_2<0>|   16.948(R)|clk               |   0.000|
-seg7_out_2<1>|   15.206(R)|clk               |   0.000|
-seg7_out_2<2>|   15.223(R)|clk               |   0.000|
-seg7_out_2<3>|   17.327(R)|clk               |   0.000|
-seg7_out_2<4>|   15.300(R)|clk               |   0.000|
-seg7_out_2<5>|   19.064(R)|clk               |   0.000|
-seg7_out_2<6>|   17.694(R)|clk               |   0.000|
--------------+------------+------------------+--------+
 
 Clock to Setup on destination clock auto_clk
 ---------------+---------+---------+---------+---------+
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-auto_clk       |    3.452|         |         |         |
+auto_clk       |    3.510|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock std_clk
@@ -236,8 +332,7 @@ Clock to Setup on destination clock std_clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-std_clk        |   23.084|         |         |         |
-switches<14>   |   23.084|         |         |         |
+std_clk        |   24.945|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock switches<5>
@@ -245,12 +340,11 @@ Clock to Setup on destination clock switches<5>
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-std_clk        |         |         |   10.577|         |
-switches<5>    |         |         |    1.619|    1.619|
-switches<6>    |         |         |    2.357|    2.357|
-switches<8>    |         |         |   -2.715|   -2.715|
-switches<9>    |         |         |   -2.269|   -2.269|
-switches<14>   |         |         |   10.577|         |
+std_clk        |         |         |   10.988|         |
+switches<5>    |         |         |    4.485|    4.485|
+switches<6>    |         |         |    4.571|    4.571|
+switches<8>    |         |         |    2.054|    2.054|
+switches<9>    |         |         |    3.434|    3.434|
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock switches<6>
@@ -258,12 +352,11 @@ Clock to Setup on destination clock switches<6>
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-std_clk        |         |         |   10.577|         |
-switches<5>    |         |         |    2.079|    2.079|
-switches<6>    |         |         |    2.817|    2.817|
-switches<8>    |         |         |   -2.255|   -2.255|
-switches<9>    |         |         |   -1.809|   -1.809|
-switches<14>   |         |         |   10.577|         |
+std_clk        |         |         |   10.988|         |
+switches<5>    |         |         |    4.418|    4.418|
+switches<6>    |         |         |    4.504|    4.504|
+switches<8>    |         |         |    1.987|    1.987|
+switches<9>    |         |         |    3.367|    3.367|
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock switches<8>
@@ -271,12 +364,11 @@ Clock to Setup on destination clock switches<8>
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-std_clk        |         |         |   10.577|         |
-switches<5>    |         |         |    4.126|    4.126|
-switches<6>    |         |         |    4.864|    4.864|
-switches<8>    |         |         |   -0.208|   -0.208|
-switches<9>    |         |         |    0.238|    0.238|
-switches<14>   |         |         |   10.577|         |
+std_clk        |         |         |   10.988|         |
+switches<5>    |         |         |    4.920|    4.920|
+switches<6>    |         |         |    5.006|    5.006|
+switches<8>    |         |         |    2.489|    2.489|
+switches<9>    |         |         |    3.869|    3.869|
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock switches<9>
@@ -284,47 +376,37 @@ Clock to Setup on destination clock switches<9>
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-std_clk        |         |         |   10.577|         |
-switches<5>    |         |         |    4.347|    4.347|
-switches<6>    |         |         |    5.085|    5.085|
-switches<8>    |         |         |    0.013|    0.013|
-switches<9>    |         |         |    0.459|    0.459|
-switches<14>   |         |         |   10.577|         |
----------------+---------+---------+---------+---------+
-
-Clock to Setup on destination clock switches<14>
----------------+---------+---------+---------+---------+
-               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
-Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
----------------+---------+---------+---------+---------+
-std_clk        |   23.084|         |         |         |
-switches<14>   |   23.084|         |         |         |
+std_clk        |         |         |   10.988|         |
+switches<5>    |         |         |    5.496|    5.496|
+switches<6>    |         |         |    5.582|    5.582|
+switches<8>    |         |         |    3.065|    3.065|
+switches<9>    |         |         |    4.445|    4.445|
 ---------------+---------+---------+---------+---------+
 
 Pad to Pad
 ---------------+---------------+---------+
 Source Pad     |Destination Pad|  Delay  |
 ---------------+---------------+---------+
-switches<7>    |LEDS<0>        |   10.870|
-switches<7>    |LEDS<1>        |   11.512|
-switches<7>    |LEDS<2>        |   10.965|
-switches<7>    |LEDS<3>        |   11.509|
-switches<7>    |LEDS<4>        |   11.724|
-switches<7>    |LEDS<5>        |   11.515|
-switches<7>    |LEDS<6>        |   12.055|
-switches<7>    |LEDS<7>        |   11.566|
-switches<7>    |LEDS<8>        |   12.348|
-switches<7>    |LEDS<9>        |   12.129|
-switches<7>    |LEDS<10>       |   11.393|
-switches<7>    |LEDS<11>       |   11.451|
-switches<7>    |LEDS<12>       |   11.475|
-switches<7>    |LEDS<13>       |   12.088|
-switches<7>    |LEDS<14>       |   12.337|
-switches<7>    |LEDS<15>       |   11.998|
+switches<7>    |LEDS<0>        |   11.612|
+switches<7>    |LEDS<1>        |   12.481|
+switches<7>    |LEDS<2>        |   11.461|
+switches<7>    |LEDS<3>        |   11.339|
+switches<7>    |LEDS<4>        |   11.972|
+switches<7>    |LEDS<5>        |   11.448|
+switches<7>    |LEDS<6>        |   11.077|
+switches<7>    |LEDS<7>        |   11.192|
+switches<7>    |LEDS<8>        |   12.451|
+switches<7>    |LEDS<9>        |   12.484|
+switches<7>    |LEDS<10>       |   11.650|
+switches<7>    |LEDS<11>       |   11.863|
+switches<7>    |LEDS<12>       |   11.880|
+switches<7>    |LEDS<13>       |   11.683|
+switches<7>    |LEDS<14>       |   12.648|
+switches<7>    |LEDS<15>       |   13.149|
 ---------------+---------------+---------+
 
 
-Analysis completed Sun Nov 11 00:56:10 2012 
+Analysis completed Sun Nov 11 15:40:30 2012 
 --------------------------------------------------------------------------------
 
 Trace Settings:

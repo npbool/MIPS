@@ -55,7 +55,8 @@ architecture Behavioral of Controller is
    type state_type is (init_state, prepare_fetch_state, fetch_state, decode_state, alu_wb_reg_state, 
 						branch_e_ne_decide_state, branch_ge_lt_decide_state, branch_gt_le_decide_state, 
 						visit_memory_word_state, visit_memory_byte_state, store_memory_byte_state, 
-						wait_memory_word_state, wait_memory_byte_state, multi_wait_state);
+						wait_memory_word_state, wait_memory_byte_state, multi_wait_state, 
+						read_serial_state, wait_insram_state, wait_serial_state);
 	signal state: state_type;
 	
 	signal counter: STD_LOGIC_VECTOR(3 downto 0);
@@ -173,15 +174,19 @@ architecture Behavioral of Controller is
 
 	--serial ins read counter
 	signal ins_counter : std_logic_vector(4 downto 0);
+	signal serial_counter: std_logic_vector(2 downto 0);
+	signal boot_mode: std_logic;  -- 1 serial 0 rom
 begin
 	alu_unit: ALU port map(A=>R_a,B=> R_b,Code=> IR(31 downto 26),Func=> IR(5 downto 0),R=> alu_out,Zero=> alu_zero,Sign=> alu_sign);
 	multiplier_unit: multiplier port map(a=>R_a, b=> R_b,p=>multi_out);
-	mem_unit: Mem port map(Seg7_out=>seg7_out_1,Addr=>mem_addr,DataIn=> mem_data_in,DataOut=> mem_data_out,En=> mem_en,Rw=> mem_rw,Done=> mem_done,Tlb_missing=> tlb_missing,clk=> div_counter(1),rst=> reset,Rom_switch=> rom_switch,bl_addr=> rom_bl_addr,pro_addr=> rom_pro_addr,bl_data=> rom_bl_data,pro_data=> rom_pro_data,Ram1_addr=> ram1_addr,Ram2_addr=> ram2_addr,Ram1_data=> ram1_data,Ram2_data=> ram2_data,Ram1_en=> ram1_en,Ram1_oe=> ram1_oe,Ram1_rw=> ram1_rw,Ram2_en=> ram2_en,Ram2_oe=> ram2_oe,Ram2_rw=> ram2_rw,Data_ready=> data_ready,Tbre=> tbre,Tsre=> tsre,Rdn=> rdn,Wrn=> wrn,Flash_addr=> flash_addr,Flash_data=> flash_data,Flash_byte=> flash_byte,Flash_ce=> flash_ce,Flash_ce1=> flash_ce1,Flash_ce2=> flash_ce2,Flash_oe=> flash_oe,Flash_rp=> flash_rp,Flash_sts=> flash_sts,Flash_vpen=> flash_vpen,Flash_we=> flash_we);
+	mem_unit: Mem port map(Seg7_out=>seg7_out_1,Addr=>mem_addr,DataIn=> mem_data_in,DataOut=> mem_data_out,En=> mem_en,Rw=> mem_rw,Done=> mem_done,Tlb_missing=> tlb_missing,clk=> clk,rst=> reset,Rom_switch=> rom_switch,bl_addr=> rom_bl_addr,pro_addr=> rom_pro_addr,bl_data=> rom_bl_data,pro_data=> rom_pro_data,Ram1_addr=> ram1_addr,Ram2_addr=> ram2_addr,Ram1_data=> ram1_data,Ram2_data=> ram2_data,Ram1_en=> ram1_en,Ram1_oe=> ram1_oe,Ram1_rw=> ram1_rw,Ram2_en=> ram2_en,Ram2_oe=> ram2_oe,Ram2_rw=> ram2_rw,Data_ready=> data_ready,Tbre=> tbre,Tsre=> tsre,Rdn=> rdn,Wrn=> wrn,Flash_addr=> flash_addr,Flash_data=> flash_data,Flash_byte=> flash_byte,Flash_ce=> flash_ce,Flash_ce1=> flash_ce1,Flash_ce2=> flash_ce2,Flash_oe=> flash_oe,Flash_rp=> flash_rp,Flash_sts=> flash_sts,Flash_vpen=> flash_vpen,Flash_we=> flash_we);
 	bl_rom_unit: bl_rom port map(clka=>clk,addra=> rom_bl_addr,douta=> rom_bl_data);
 	pro_rom_unit: pro_rom port map(clka=>clk,addra=> rom_pro_addr,douta=> rom_pro_data);
 	
 	--clock divided
-	clk<=std_clk when switches(14) = '1' else div_counter(1);
+	clk<=div_counter(1) when ins_counter < "10101" else std_clk;
+	
+	boot_mode <= switches(13);
 	
 	process (reset, clk)
 	begin
@@ -192,8 +197,54 @@ begin
 		elsif clk'event and clk='1' then
 			case state is 
 				when init_state =>
-					PC <= x"1FC00000";
-					state <= prepare_fetch_state;
+					serial_counter <= (others =>'0');
+					ins_counter <= "00000";
+					if boot_mode = '1' then -- serial
+						PC <= x"00000000";
+						state <= read_serial_state;
+					else -- rom
+						PC <= x"1FC00000";
+						state <= prepare_fetch_state;
+					end if;
+				when read_serial_state =>
+					case serial_counter is
+						when "100" =>
+							mem_addr <= ext(ins_counter, 30) & "00"; -- write into ram
+							mem_data_in(31 downto 24) <= mem_data_out(7 downto 0);
+							serial_counter <= "000";
+							mem_rw <= '1';
+							state <= wait_insram_state;
+						when "011" =>
+							mem_data_in(23 downto 16) <= mem_data_out(7 downto 0);
+							state <= wait_serial_state;
+						when "010" =>
+							mem_data_in(15 downto 8) <= mem_data_out(7 downto 0);
+							state <= wait_serial_state;
+						when "001" =>
+							mem_data_in(7 downto 0) <= mem_data_out(7 downto 0);
+							state <= wait_serial_state;
+						when others => -- "000"
+							mem_addr <= x"1FD003F8";
+							mem_rw <= '0';
+							state <= wait_serial_state;
+					end case;
+					mem_en <= '1';
+				when wait_serial_state =>
+					if mem_done = '1' then
+						mem_en <= '0';
+						serial_counter <= serial_counter + 1;
+						state <= read_serial_state;
+					end if;
+				when wait_insram_state =>
+					if mem_done = '1' then
+						mem_en <= '0';
+						if ins_counter = "10100" then
+							state <= prepare_fetch_state;
+						else
+							state <= read_serial_state;
+						end if;
+						ins_counter <= ins_counter + 1;
+					end if;
 				when prepare_fetch_state =>
 					current_PC <= PC;
 					mem_addr <= PC;
@@ -230,7 +281,6 @@ begin
 											R_b <= GPR(CONV_INTEGER(IR(20 downto 16)));											
 											multi_wait_counter <= "00";
 											state <= multi_wait_state;
-											-- TODO
 										when "010000" =>	-- MFHI d
 											GPR(CONV_INTEGER(IR(15 downto 11))) <= reg_hi;
 											state <= prepare_fetch_state;
@@ -363,7 +413,7 @@ begin
 					-- see whether finished
 					if mem_done = '1' then
 						mem_en <= '0';
-						case IR(31 downto 26) is 
+						case IR(31 downto 26) is
 							when "100011" => -- lw
 								GPR(CONV_INTEGER(IR(20 downto 16))) <= mem_data_out;
 								state <= prepare_fetch_state;
@@ -447,6 +497,8 @@ begin
 						PC <= PC + (SXT(IR(15 downto 0), 30) & "00");
 					end if;
 					state <= prepare_fetch_state;
+				when others =>
+					state <= prepare_fetch_state;
 			end case;
 		end if;
 	end process;
@@ -460,7 +512,7 @@ begin
 	begin
 		case state is 
 			when prepare_fetch_state => 
-				seg7_out_2 <= "0110000"; 
+				seg7_out_2 <= "0110000";
 			when fetch_state =>
 				seg7_out_2 <= "1101101";
 			when decode_state =>
