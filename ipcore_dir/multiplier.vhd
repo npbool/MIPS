@@ -61,9 +61,9 @@ END COMPONENT;
 -- Configuration specification
   FOR ALL : wrapped_multiplier USE ENTITY XilinxCoreLib.mult_gen_v11_2(behavioral)
     GENERIC MAP (
-      c_a_type => 0,
+      c_a_type => 1,
       c_a_width => 32,
-      c_b_type => 0,
+      c_b_type => 1,
       c_b_value => "10000001",
       c_b_width => 32,
       c_ccm_imp => 0,

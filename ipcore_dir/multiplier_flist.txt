@@ -1,4 +1,5 @@
 # Output products list for <multiplier>
+_xmsgs\pn_parser.xmsgs
 multiplier.asy
 multiplier.gise
 multiplier.ngc

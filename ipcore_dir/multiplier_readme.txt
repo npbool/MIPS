@@ -1,5 +1,5 @@
 The following files were generated for 'multiplier' in directory 
-E:\Course\Junior1\CO\Final\Project\MIPS\ipcore_dir\
+D:\Projects\MIPS\ipcore_dir\
 
 multiplier.asy:
    Graphical symbol information file. Used by the ISE tools and some

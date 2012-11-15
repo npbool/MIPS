@@ -1,4 +1,4 @@
-Release 13.1 - Bitgen O.40d (nt64)
+Release 13.1 - Bitgen O.40d (nt)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 Loading device for application Rf_Device from file '3s1200e.nph' in environment
 D:\Xilinx\13.1\ISE_DS\ISE\.
@@ -6,9 +6,9 @@ D:\Xilinx\13.1\ISE_DS\ISE\.
 -4
 Opened constraints file Controller.pcf.
 
-Thu Nov 15 09:56:02 2012
+Thu Nov 15 18:35:20 2012
 
-D:\Xilinx\13.1\ISE_DS\ISE\bin\nt64\unwrapped\bitgen.exe -intstyle ise -w -g DebugBitstream:No -g Binary:no -g CRC:Enable -g ConfigRate:1 -g ProgPin:PullUp -g DonePin:PullUp -g TckPin:PullUp -g TdiPin:PullUp -g TdoPin:PullUp -g TmsPin:PullUp -g UnusedPin:PullDown -g UserID:0xFFFFFFFF -g DCMShutdown:Disable -g StartUpClk:CClk -g DONE_cycle:4 -g GTS_cycle:5 -g GWE_cycle:6 -g LCK_cycle:NoWait -g Security:None -g DonePipe:No -g DriveDone:No Controller.ncd 
+D:\Xilinx\13.1\ISE_DS\ISE\bin\nt\unwrapped\bitgen.exe -intstyle ise -w -g DebugBitstream:No -g Binary:no -g CRC:Enable -g ConfigRate:1 -g ProgPin:PullUp -g DonePin:PullUp -g TckPin:PullUp -g TdiPin:PullUp -g TdoPin:PullUp -g TmsPin:PullUp -g UnusedPin:PullDown -g UserID:0xFFFFFFFF -g DCMShutdown:Disable -g StartUpClk:CClk -g DONE_cycle:4 -g GTS_cycle:5 -g GWE_cycle:6 -g LCK_cycle:NoWait -g Security:None -g DonePipe:No -g DriveDone:No Controller.ncd 
 
 Summary of Bitgen Options:
 +----------------------+----------------------+
@@ -89,13 +89,19 @@ There were 0 CONFIG constraint(s) processed from Controller.pcf.
 
 
 Running DRC.
+WARNING:PhysDesignRules:367 - The signal <switches<8>_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <switches<9>_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <std_clk_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <switches<10>_IBUF> is incomplete. The
    signal does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <switches<11>_IBUF> is incomplete. The
    signal does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <switches<12>_IBUF> is incomplete. The
    signal does not drive any load pins in the design.
-DRC detected 0 errors and 3 warnings.  Please see the previously displayed
+DRC detected 0 errors and 6 warnings.  Please see the previously displayed
 individual error or warning messages for more details.
 Creating bit map...
 Saving bit stream in "controller.bit".

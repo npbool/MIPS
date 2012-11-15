@@ -1,0 +1,24 @@
+main:
+li $2,0x1FD003F8
+li $3,0x8fCE0135
+mult $2,$3
+mflo $4
+sw $4,0($2)
+srl $4,$4,8
+sw $4,0($2)
+srl $4,$4,8
+sw $4,0($2)
+srl $4,$4,8
+sw $4,0($2)
+mfhi $5
+sw $5,0($2)
+srl $5,$5,8
+sw $5,0($2)
+srl $5,$5,8
+sw $5,0($2)
+srl $5,$5,8
+sw $5,0($2)
+hello:
+li $20,1
+bgtz $20 hello
+nop

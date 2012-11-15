@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <symbol version="7" name="multiplier">
     <symboltype>BLOCK</symboltype>
-    <timestamp>2012-11-8T14:23:45</timestamp>
+    <timestamp>2012-11-15T8:51:38</timestamp>
     <pin polarity="Input" x="0" y="80" name="a[31:0]" />
     <pin polarity="Input" x="0" y="144" name="b[31:0]" />
     <pin polarity="Output" x="576" y="80" name="p[63:0]" />

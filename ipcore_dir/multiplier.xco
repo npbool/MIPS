@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 13.1
-# Date: Thu Nov 08 14:23:12 2012
+# Date: Thu Nov 15 08:51:04 2012
 #
 ##############################################################
 #
@@ -46,9 +46,9 @@ CSET optgoal=Speed
 CSET outputwidthhigh=63
 CSET outputwidthlow=0
 CSET pipestages=0
-CSET portatype=Signed
+CSET portatype=Unsigned
 CSET portawidth=32
-CSET portbtype=Signed
+CSET portbtype=Unsigned
 CSET portbwidth=32
 CSET roundpoint=0
 CSET sclrcepriority=SCLR_Overrides_CE
@@ -61,4 +61,4 @@ CSET zerodetect=false
 MISC pkg_timestamp=2011-02-03T22:03:55.000Z
 # END Extra information
 GENERATE
-# CRC: 319f013e
+# CRC: 121484a2
