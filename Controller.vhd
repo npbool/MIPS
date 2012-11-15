@@ -170,7 +170,7 @@ architecture Behavioral of Controller is
 	signal PC: std_logic_vector(31 downto 0); -- PC GPR
 	signal current_PC: std_logic_vector(31 downto 0); -- the register to store PC
 	
-	signal LED_display_data: std_logic_vector(31 downto 0);
+	
 
 	--serial ins read counter
 	signal ins_counter : std_logic_vector(4 downto 0);
@@ -184,73 +184,95 @@ begin
 	pro_rom_unit: pro_rom port map(clka=>clk,addra=> rom_pro_addr,douta=> rom_pro_data);
 	
 	--clock divided
-	clk<=div_counter(1) when ins_counter < "10101" else std_clk;
+	--clk<=div_counter(1) when ins_counter < "10101" else std_clk;
+--	clk <= div_counter(1) when (switches(14)='0' and ins_counter < "01010") or switches(12)='1' else std_clk;
+	clk <= div_counter(1) when switches(14) = '0' else std_clk;
 	
 	boot_mode <= switches(13);
 	
+--	seg7_out_2(6) <= mem_done;
 	process (reset, clk)
 	begin
 		if reset = '0' then
 			GPR(0)<=(others => '0');
 			mem_en<='0';
 			state <= init_state;
-		elsif clk'event and clk='1' then
+		elsif clk'event and clk='1' then			
 			case state is 
 				when init_state =>
-					serial_counter <= (others =>'0');
-					ins_counter <= "00000";
-					if boot_mode = '1' then -- serial
+--					serial_counter <= "000";
+--					ins_counter <= "00000";
+					if boot_mode = '1' then -- ram
 						PC <= x"00000000";
-						state <= read_serial_state;
+						state <= prepare_fetch_state;
 					else -- rom
 						PC <= x"1FC00000";
 						state <= prepare_fetch_state;
 					end if;
-				when read_serial_state =>
-					case serial_counter is
-						when "100" =>
-							mem_addr <= ext(ins_counter, 30) & "00"; -- write into ram
-							mem_data_in(31 downto 24) <= mem_data_out(7 downto 0);
-							serial_counter <= "000";
-							mem_rw <= '1';
-							state <= wait_insram_state;
-						when "011" =>
-							mem_data_in(23 downto 16) <= mem_data_out(7 downto 0);
-							state <= wait_serial_state;
-						when "010" =>
-							mem_data_in(15 downto 8) <= mem_data_out(7 downto 0);
-							state <= wait_serial_state;
-						when "001" =>
-							mem_data_in(7 downto 0) <= mem_data_out(7 downto 0);
-							state <= wait_serial_state;
-						when others => -- "000"
-							mem_addr <= x"1FD003F8";
-							mem_rw <= '0';
-							state <= wait_serial_state;
-					end case;
-					mem_en <= '1';
-				when wait_serial_state =>
-					if mem_done = '1' then
-						mem_en <= '0';
-						serial_counter <= serial_counter + 1;
-						state <= read_serial_state;
-					end if;
-				when wait_insram_state =>
-					if mem_done = '1' then
-						mem_en <= '0';
-						if ins_counter = "10100" then
-							state <= prepare_fetch_state;
-						else
-							state <= read_serial_state;
-						end if;
-						ins_counter <= ins_counter + 1;
-					end if;
+--				when read_serial_state =>
+--					seg7_out_2(0 to 5)<=serial_counter &"000";
+--					case serial_counter is						
+--						when "000" => -- "000" --问题：第2次以后进入000状态会把上次读到的结果直接作为本次串口读取的结果，少读一次
+--							mem_addr <= x"1FD003F8";
+--							mem_rw <= '0';
+--							state <= wait_serial_state;
+--							mem_en <= '1';
+--						when "001" =>
+--							--mem_data_in(7 downto 0) <= mem_data_out(7 downto 0);			
+--							
+--							IR(7 downto 0) <= mem_data_out(7 downto 0);
+--							state <= wait_serial_state;
+--							mem_en <= '1';
+--						when "010" =>
+--							--mem_data_in(15 downto 8) <= mem_data_out(7 downto 0);
+--							
+--							IR(15 downto 8) <= mem_data_out(7 downto 0);
+--							state <= wait_serial_state;
+--							mem_en <= '1';
+--						when "011" =>
+--							--mem_data_in(23 downto 16) <= mem_data_out(7 downto 0);
+--							
+--							IR(23 downto 16) <= mem_data_out(7 downto 0);
+--							state <= wait_serial_state;
+--							mem_en <= '1';
+--						when "100" =>							
+--							mem_addr <= ext(ins_counter, 30) & "00"; -- write into ram
+--							--mem_data_in(31 downto 24) <= mem_data_out(7 downto 0);
+--							
+--							IR(31 downto 24)<=mem_data_out(7 downto 0);
+--							mem_data_in<=mem_data_out(7 downto 0) & IR(23 downto 0);							
+--							mem_rw <= '1';
+--							state <= wait_insram_state;						
+--							mem_en <= '1';
+--						when others => 
+--							null;
+--					end case;
+					
+--				when wait_serial_state =>
+--					seg7_out_2(0 to 5)<="000010";
+--					if mem_done = '1' then
+--						mem_en <= '0';
+--						serial_counter <= serial_counter + 1;
+--						state <= read_serial_state;
+--					end if;
+--				when wait_insram_state =>
+--					seg7_out_2(0 to 5)<="000100";
+--					if mem_done = '1' then
+--						mem_en <= '0';
+--						serial_counter <= "000";
+--						if ins_counter = "01001" then
+--							state <= prepare_fetch_state;
+--						else							
+--							state <= read_serial_state;
+--						end if;
+--						ins_counter <= ins_counter + 1;						
+--					end if;
 				when prepare_fetch_state =>
 					current_PC <= PC;
 					mem_addr <= PC;
 					mem_rw <= '0';
 					mem_en <= '1';
-					state <= fetch_state;					
+					state <= fetch_state;
 				when fetch_state => 
 					if mem_done = '1' then
 						mem_en <= '0';
@@ -269,7 +291,8 @@ begin
 											R_a <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											R_b <= GPR(CONV_INTEGER(IR(20 downto 16)));
 											R_d_idx <= IR(15 downto 11);
-											state <= alu_wb_reg_state;										
+											state <= alu_wb_reg_state;
+									
 										when "000000" | "000011" => -- SLL SRA
 											R_a <= GPR(CONV_INTEGER(IR(20 downto 16)));
 											R_b <= EXT(IR(10 downto 6),32);
@@ -294,7 +317,7 @@ begin
 											reg_lo <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											state <= prepare_fetch_state;
 										when "001001" => -- JALR
-											GPR(CONV_INTEGER(IR(15 downto 11))) <= PC;
+											GPR(31) <= PC;
 											PC <= GPR(CONV_INTEGER(IR(25 downto 21)));
 											state <= prepare_fetch_state;
 										when "001000" => -- JR 
@@ -345,7 +368,7 @@ begin
 							R_b <= SXT(IR(15 downto 0), 32);
 							case IR(27 downto 26) is
 								when "11" => -- Word visit
-									if IR(25 downto 24) = "11" then -- cache, which is regarded as NOP
+									if IR(29 downto 28) = "11" then -- cache, which is regarded as NOP
 										state <= prepare_fetch_state; 
 									else
 										state <= visit_memory_word_state;
@@ -530,32 +553,33 @@ begin
 			when alu_wb_reg_state =>
 				seg7_out_2 <= "1110111";
 			when others => 
-				seg7_out_2 <= "0000000";
+				seg7_out_2 <= "1001111";
 		end case;
 	end process;
 	
-	process(switches,PC,IR,reg_hi,reg_lo,GPR)
+	process(switches,PC,IR,reg_hi,reg_lo,GPR,clk)
+	variable LED_display_data: std_logic_vector(31 downto 0);
 	begin
 		case switches(8 to 9) is 
 			when "00" => 
-				LED_display_data <= alu_out;
+				LED_display_data := alu_out;
 			when "01" =>
 				case switches(5 to 6) is
 					when "00" =>  --general
-						LED_display_data <= GPR(CONV_INTEGER(switches(0 to 4)));
+						LED_display_data := GPR(CONV_INTEGER(switches(0 to 4)));
 					when "01" => --CP0
 						null;
 					when "10" => --PC/IR
 						if switches(0)='1' then
-							LED_display_data<=PC;
+							LED_display_data:=PC;
 						else
-							LED_display_data <= IR;
+							LED_display_data := IR;
 						end if;
 					when "11" => --HI/LO
 						if switches(0)='1' then
-							LED_display_data<=reg_hi;
+							LED_display_data:=reg_hi;
 						else
-							LED_display_data<=reg_lo;
+							LED_display_data:=reg_lo;
 						end if;							
 					when others =>
 						null;
@@ -576,11 +600,12 @@ begin
 	process(auto_clk)
 	begin 
 		if auto_clk'event and auto_clk = '1' then
-			if div_counter = "100" then 
-				div_counter <= "000";
-			else 
-				div_counter <= div_counter + 1;
-			end if;
+--			if div_counter = "100" then 
+--				div_counter <= "000";
+--			else 
+--				div_counter <= div_counter + 1;
+--			end if;
+		div_counter<=div_counter+1;
 		end if;
 	end process;
 end Behavioral;

@@ -67,7 +67,6 @@ end Mem;
 
 architecture Behavioral of Mem is
 
-signal working:STD_LOGIC:='0';
 signal count:STD_LOGIC_VECTOR(2 downto 0);
 signal op:STD_LOGIC_VECTOR(3 downto 0); 
 
@@ -83,9 +82,9 @@ signal tmp:STD_LOGIC_VECTOR(1 downto 0);
 --RAM右移两位
 --ROM地址右移两位
 --flash地址右移1位
-
-begin	
-	--working<='0';
+	type mem_state is (idle,working,finished);
+	signal state:mem_state;
+begin		
 	Ram2_en<='0';
 	Ram2_oe<='0';
 	Flash_ce<='0';
@@ -95,18 +94,36 @@ begin
 	Flash_byte<='1';
 	Flash_vpen<='1';
 	
+	Seg7_out(0)<= Addr(4);Seg7_out(1)<= Addr(5);Seg7_out(2)<= Addr(6);Seg7_out(3)<= Addr(7);	
+	Seg7_out(6)<= Rw;
+	
+	PROCESS(clk)
+	begin
+		case state is 
+		when idle =>
+			Seg7_out(4 to 5) <= "00";
+		when working=>
+			Seg7_out(4 to 5) <="11";
+		when finished=>
+			Seg7_out(4 to 5) <= "01";
+		when others => null;
+		end case;
+	end process;
 	--Seg7_out <= "0000000" when working='0' else op & "0000";
 	PROCESS(clk, rst)
 	variable actual_addr:STD_LOGIC_VECTOR(31 downto 0);
 	begin
 		if rst = '0' then
 			-- todo 			
-			working <= '0';		
+			state<=idle;		
 			Rdn<='1';
 			Wrn<='1';
 			Done<='0';
 		elsif clk'event and clk='1' then 
-			if working='0' and En='1' then
+			if En='0' then
+				Done<='0';
+				state<=idle;
+			elsif state=idle and En='1' then
 				--当前空闲								
 				
 				--清零
@@ -114,20 +131,19 @@ begin
 					actual_addr := "000" & Addr(28 downto 0);
 				else 
 					actual_addr := Addr;
-				end if;	
+				end if;					
 				
-				Done<='0';
 				if actual_addr(31 downto 12)=x"1FC00" then
 					--ROM
-					Seg7_out<="1111110";
+					--Seg7_out<="1111110";
 					bl_addr<=actual_addr(11 downto 2);
 					pro_addr<=actual_addr(11 downto 2);
 					op<="0010";
 					count<="000";
-					working<='1';
+					state<=working;
 				elsif actual_addr=x"1FD003F8" then
 					--串口
-					Seg7_out<="0000010"; -- serial 2
+					--Seg7_out<="0000010"; -- serial 2
 					Ram1_en<='1';
 					Ram1_oe<='1';
 					Ram1_rw<='1';
@@ -136,7 +152,7 @@ begin
 						if Data_ready='1' then							
 							Ram1_data<="ZZZZZZZZZZZZZZZZ";
 							op<="1100";
-							working<='1';
+							state<=working;
 							count<="000";
 						end if;
 					else
@@ -144,7 +160,7 @@ begin
 						if Tbre='1' and Tsre='1' then							
 							Ram1_data<=DataIn(15 downto 0);
 							op<="1101";
-							working<='1';
+							state<=working;
 							count<="000";
 						end if;
 					end if;				
@@ -170,13 +186,11 @@ begin
 					else
 						--write
 						Flash_we<='1';
-						Flash_oe<='0';
-						
-					end if;
-					null;
+						Flash_oe<='0';						
+					end if;					
 				elsif Rw='0' then
 					--read Ram 3
-					Seg7_out<="0000011";
+					--Seg7_out<="0000011";
 					Ram1_en<='0';
 					Ram1_oe<='0';
 					Ram1_rw<='1';
@@ -185,16 +199,14 @@ begin
 					Wrn<='1';
 					Ram1_addr<=Addr(19 downto 2);
 					Ram1_data<="ZZZZZZZZZZZZZZZZ";
-					Ram1_rw<='1';
 					Ram2_addr<=Addr(19 downto 2);				
 					Ram2_data<="ZZZZZZZZZZZZZZZZ";
-					Ram2_rw<='1';	
-					working<='1';
+					state<=working;
 					op<="0000";
-					count<="011";
+					count<="001";
 				else
 					--write Ram		4
-					Seg7_out<="0000100";
+					--Seg7_out<="0000100";
 					Ram1_en<='0';
 					Ram1_oe<='0';
 					Ram1_rw<='0';
@@ -202,16 +214,14 @@ begin
 					Rdn<='1';
 					Wrn<='1';
 					Ram1_addr<=Addr(19 downto 2);		
-					Ram1_data<=DataIn(31 downto 16);
-					Ram1_rw<='0';
+					Ram1_data<=DataIn(31 downto 16);					
 					Ram2_addr<=Addr(19 downto 2);				
-					Ram2_data<=DataIn(15 downto 0);
-					Ram2_rw<='0';		
-					working<='1';
+					Ram2_data<=DataIn(15 downto 0);					
+					state<=working;
 					op<="0001";
-					count<="011";
+					count<="001";
 				end if;
-			elsif working='1' then
+			elsif state=working then
 				case count is
 				when "000" =>
 					--done
@@ -223,28 +233,28 @@ begin
 						else
 							DataOut <= pro_data;
 						end if;
-						working <= '0';
+						state<=finished;
 						Done <= '1';
 					when "1100" =>
 						Rdn<='0';
 						Wrn<='1';
 						op<="0100";
-						count<="111";
+						count<="001";
 					when "1101" =>
 						Rdn<='1';
 						Wrn<='0';
 						op<="0101";
-						count<="111";						
+						count<="001";						
 					when "0100" => --prev serial read						
 						DataOut<=x"0000"&Ram1_data;
 						Rdn<='1';
 						Wrn<='1';
-						working<='0';
+						state<=finished;
 						Done<='1';
 					when "0101" => --prev serial write
 						Rdn<='1';
 						Wrn<='1';
-						working<='0';
+						state<=finished;
 						Done<='1';
 					when "0110" => --prev flash read
 						null;
@@ -254,10 +264,10 @@ begin
 						Done<='1';
 						DataOut(31 downto 16)<=Ram1_data;
 						DataOut(15 downto 0)<=Ram2_data;
-						working<='0';					
+						state<=finished;					
 					when "0001" => --prev ram write				
 						Done<='1';
-						working<='0';
+						state<=finished;
 					when others=>
 						null;
 					end case;
